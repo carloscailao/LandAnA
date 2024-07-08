@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LandAnAGUI extends JFrame{
+    ImageIcon logo = new ImageIcon("LandAnALogo1.png");
 
     public LandAnAGUI () {
         super("LandAnA");
@@ -13,13 +14,12 @@ public class LandAnAGUI extends JFrame{
         setVisible(true);
         setResizable(false);
 
+        setIconImage(logo.getImage());
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void init() {
-        ImageIcon logo = new ImageIcon("LandAnALogo1.png");
-        setIconImage(logo.getImage());
-
         JPanel panelNorth = new JPanel();
         panelNorth.setLayout(new FlowLayout());
         panelNorth.setBackground(Color.decode("#3DAC78"));
