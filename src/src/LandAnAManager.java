@@ -4,7 +4,7 @@ public class LandAnAManager {
     private ArrayList<Hotel> hotels;
 
     public LandAnAManager () {
-        this.hotels = new ArrayList<Hotel>();
+        this.hotels = new ArrayList<>();
     }
 
     public void createHotel(String name) {
@@ -14,11 +14,19 @@ public class LandAnAManager {
     }
 
     public boolean isUniqueHotel(String name) {
-        for (int i = 0; i < hotels.size(); i++) {
-            if (hotels.get(i).getHotelName().equals(name)) {
+        for (Hotel hotel : hotels) {
+            if (hotel.getHotelName().equals(name)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public ArrayList<String> returnHotelNames() {
+        ArrayList<String> hotelNames = new ArrayList<>();
+        for (Hotel hotel : hotels) {
+            hotelNames.add(hotel.getHotelName());
+        }
+        return hotelNames;
     }
 }

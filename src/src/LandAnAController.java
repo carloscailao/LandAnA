@@ -16,7 +16,7 @@ public class LandAnAController implements ActionListener, DocumentListener {
     }
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Create Hotel")) {
-            gui.createHotelPanel();
+            gui.createHotelPanel(manager.returnHotelNames());
         }
         else if (e.getActionCommand().equals("Manage Hotel")) {
             gui.manageHotelPanel();
@@ -29,6 +29,9 @@ public class LandAnAController implements ActionListener, DocumentListener {
         }
         else if (e.getActionCommand().equals("Back")) {
             gui.mainMenuPanel();
+        }
+        else if (e.getActionCommand().equals("Enter")) {
+            // TODO
         }
 
     }

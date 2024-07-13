@@ -1,21 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.event.DocumentListener;
-
-import static javax.swing.SwingConstants.WEST;
 
 public class LandAnAGUI extends JFrame {
     ImageIcon logo = new ImageIcon("LandAnALogo1.png");
-    final String  bgColor = "#BFE7CC";
-    final String fontColor = "#3DAC78";
-    final String lightFontColor = "#D8F3DC";
+    final String mint = "#BFE7CC";
+    final String green = "#3DAC78";
+    final String sage = "#D8F3DC";
 
     private JButton btnCreateHotel;
     private JButton btnManageHotel;
     private JButton btnViewHotels;
     private JButton btnSimulateBooking;
     private JButton btnBack;
+    private JButton btnEnter;
+
+    private JTextField tfHotelName;
 
     public LandAnAGUI() {
         super("LandAnA");
@@ -29,8 +31,9 @@ public class LandAnAGUI extends JFrame {
     }
 
     private void init() {
-        btnBack = new JButton("Back");
         btnCreateHotel = new JButton("Create Hotel");
+        btnBack = new JButton("Back");
+        btnEnter = new JButton("Enter");
         btnManageHotel = new JButton("Manage Hotels");
         btnViewHotels = new JButton("View Hotels");
         btnSimulateBooking = new JButton("Simulate Booking");
@@ -52,11 +55,11 @@ public class LandAnAGUI extends JFrame {
 
     public void mainMenuPanel() {
         JPanel mainMenuPanel = new JPanel();
-        mainMenuPanel.setBackground(Color.decode(bgColor));
+        mainMenuPanel.setBackground(Color.decode(mint));
         mainMenuPanel.setLayout(new BoxLayout(mainMenuPanel, BoxLayout.Y_AXIS));
 
         JLabel lblLandAnA = new JLabel("LandAnA");
-        lblLandAnA.setForeground(Color.decode(fontColor));
+        lblLandAnA.setForeground(Color.decode(green));
         lblLandAnA.setFont(new Font("Verdana", Font.BOLD, 40));
         ImageIcon logoDisplay = new ImageIcon(logo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
         lblLandAnA.setIcon(logoDisplay);
@@ -67,7 +70,7 @@ public class LandAnAGUI extends JFrame {
         mainMenuPanel.add(lblLandAnA);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.decode(bgColor));
+        buttonPanel.setBackground(Color.decode(mint));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         buttonPanel.add(btnCreateHotel);
@@ -83,33 +86,75 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
-    public void createHotelPanel() {
+    public void createHotelPanel(ArrayList<String> hotelNames) {
         JPanel createHotelPanel = new JPanel();
-        createHotelPanel.setBackground(Color.decode(bgColor));
+        createHotelPanel.setBackground(Color.decode(mint));
         createHotelPanel.setLayout(new BorderLayout());
 
         // Top panel with GridBagLayout
         JPanel topPanel = new JPanel(new GridBagLayout());
-        topPanel.setBackground(Color.decode(fontColor));
+        topPanel.setBackground(Color.decode(green));
         GridBagConstraints gbc = new GridBagConstraints();
-
         // Back button
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
         topPanel.add(btnBack, gbc);
-
         // Create Hotel label
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1.0;
         gbc.anchor = GridBagConstraints.CENTER;
         JLabel createHotelLabel = new JLabel("Create Hotel", JLabel.CENTER);
-        createHotelLabel.setForeground(Color.decode(lightFontColor));
+        createHotelLabel.setForeground(Color.decode(sage));
         createHotelLabel.setFont(new Font("Verdana", Font.BOLD, 30));
         topPanel.add(createHotelLabel, gbc);
 
+        // Display current hotels at the south
+        JPanel southPanel = new JPanel(new BorderLayout());
+        southPanel.setBackground(Color.decode(green));
+        // Current Hotels label
+        JLabel currHotels = new JLabel ("Current Hotels:", JLabel.CENTER);
+        currHotels.setForeground(Color.decode(mint));
+        currHotels.setFont(new Font("Arial", Font.BOLD, 20));
+        southPanel.add(currHotels, BorderLayout.NORTH);
+        // Display all current hotels
+        JPanel hotelsPanel = new JPanel(new FlowLayout());
+        hotelsPanel.setForeground((Color.decode(sage)));
+        hotelsPanel.setBackground(Color.decode(green));
+        for (String name : hotelNames) {
+            JLabel hotelLabel = new JLabel(name);
+            hotelsPanel.add(hotelLabel);
+        }
+        // Add note
+        southPanel.add(hotelsPanel, BorderLayout.CENTER);
+        JLabel note = new JLabel("note: each hotel must have a unique name", JLabel.CENTER);
+        note.setForeground(Color.decode(sage));
+        note.setFont(new Font("Arial", Font.ITALIC, 15));
+        southPanel.add(note, BorderLayout.SOUTH);
+
+        // center panel
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setBackground((Color.decode(sage)));
+        // Enter name
+        JLabel enterName = new JLabel("Enter hotel name", JLabel.CENTER);
+        enterName.setForeground(Color.decode(green));
+        enterName.setFont(new Font("Arial", Font.BOLD, 20));
+        centerPanel.add(enterName, BorderLayout.NORTH);
+        // center center panel
+        JPanel namePanel = new JPanel(new FlowLayout());
+        namePanel.setBackground(Color.decode(sage));
+        tfHotelName = new JTextField(20);
+        namePanel.add(tfHotelName);
+        namePanel.add(btnEnter);
+        // TODO
+        centerPanel.add(namePanel, BorderLayout.CENTER);
+
+
+        // Add everything to createHotel panel
         createHotelPanel.add(topPanel, BorderLayout.NORTH);
+        createHotelPanel.add(southPanel, BorderLayout.SOUTH);
+        createHotelPanel.add(centerPanel, BorderLayout.CENTER);
         setContentPane(createHotelPanel);
         revalidate();
         repaint();
