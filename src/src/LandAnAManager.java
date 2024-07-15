@@ -7,10 +7,8 @@ public class LandAnAManager {
         this.hotels = new ArrayList<>();
     }
 
-    public void createHotel(String name) {
-        if (isUniqueHotel(name)) {
-            hotels.add(new Hotel(name));
-        }
+    public void addHotel(Hotel hotel) {
+        hotels.add(hotel);
     }
 
     public boolean isUniqueHotel(String name) {
@@ -28,5 +26,17 @@ public class LandAnAManager {
             hotelNames.add(hotel.getHotelName());
         }
         return hotelNames;
+    }
+
+    public Hotel getHotel(int index) {
+        return hotels.get(index);
+    }
+
+    public int getNHotels() {
+        return hotels.size();
+    }
+
+    public void createRooms(int index, int std, int deluxe, int executive) {
+        hotels.get(index).createRooms(std, deluxe, executive);
     }
 }
