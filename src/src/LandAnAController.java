@@ -1,3 +1,4 @@
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -66,13 +67,15 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 gui.lackingRoomsPrompt();
             }
             else if (gui.getRoomsTotal() >= 1 && gui.getRoomsTotal()<=50) {
-                manager.createRooms(manager.getNHotels() - 1, gui.getSldStandard().getValue(), gui.getSldDeluxe().getValue(), gui.getSldStandard().getValue());
+                manager.createRooms(manager.getNHotels() - 1, gui.getSldStandard().getValue(),
+                                    gui.getSldDeluxe().getValue(), gui.getSldExecutive().getValue());
                 gui.successPrompt();
                 gui.mainMenuPanel();
             }
         }
         else if(e.getActionCommand().equals("Manage Hotel")) {
-            gui.manageHotelPanel(manager.getHotel(gui.getcBoxHotels().getSelectedIndex()));
+            manager.setHotelIndex(gui.getcBoxHotels().getSelectedIndex());
+            gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
         }
         else if(e.getActionCommand().equals("Change Hotel Name")) {
             if (gui.getHotelName().isEmpty()) {
@@ -83,10 +86,65 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             }
             else {
                 if (gui.confirmPrompt() == 0) {
-                    manager.setHotelName(gui.getcBoxHotels().getSelectedIndex(), gui.getHotelName());
-                    gui.manageHotelPanel(manager.getHotel(gui.getcBoxHotels().getSelectedIndex()));
+                    manager.setHotelName(manager.getHotelIndex(), gui.getHotelName());
+                    gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
                 }
             }
+        }
+        else if (e.getActionCommand().equals("Add Standard Rooms")) {
+            if (gui.addRoomPrompt() == JOptionPane.OK_OPTION) {
+                if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) > 50) {
+                    gui.excessRoomsPrompt();
+                }
+                else if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) <= 50) {
+                    manager.createRooms(manager.getHotelIndex(), gui.getSpnValue(), 0, 0);
+                    gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                    gui.successPrompt();
+                }
+                gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
+            }
+        }
+        else if (e.getActionCommand().equals("Add Deluxe Rooms")) {
+            if (gui.addRoomPrompt() == JOptionPane.OK_OPTION) {
+                if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) > 50) {
+                    gui.excessRoomsPrompt();
+                }
+                else if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) <= 50) {
+                    manager.createRooms(manager.getHotelIndex(), 0, gui.getSpnValue(), 0);
+                    gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                    gui.successPrompt();
+                }
+                gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
+            }
+        }
+        else if (e.getActionCommand().equals("Add Executive Rooms")) {
+            if (gui.addRoomPrompt() == JOptionPane.OK_OPTION) {
+                if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) > 50) {
+                    gui.excessRoomsPrompt();
+                }
+                else if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) <= 50) {
+                    manager.createRooms(manager.getHotelIndex(), 0, 0, gui.getSpnValue());
+                    gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                    gui.successPrompt();
+                }
+                gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
+            }
+        }
+        else if (e.getActionCommand().equals("Remove Room")) {
+            //gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+            if (manager.getHotel(manager.getHotelIndex()).getTotalRooms()>1) {
+                if (gui.pickRoomPrompt() == JOptionPane.OK_OPTION) {
+                    if (manager.hasNoReservations(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex())) {
+                        System.out.println("Deleting room");
+                        manager.deleteRoom(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex());
+                        gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                    }
+                }
+            }
+            else if (manager.getHotel(manager.getHotelIndex()).getTotalRooms()<=1) {
+                gui.lackingRoomsPrompt();
+            }
+            gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
         }
     }
 

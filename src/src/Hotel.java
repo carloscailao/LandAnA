@@ -27,23 +27,35 @@ public class Hotel {
 
     public void createRooms (int std, int deluxe, int executive) {
             for (int i = 0; i < std; i++) {
-                String name = "S" + nStdRooms + 1;
+                String name = "S" + (nStdRooms + 1);
                 rooms.add(new StandardRoom(name, basePrice));
+                System.out.println("Standard room created");
                 nStdRooms++;
             }
             for (int i = 0; i < deluxe; i++) {
-                String name = "D" + nDelRooms + 1;
+                String name = "D" + (nDelRooms + 1);
                 rooms.add(new DeluxeRoom(name, basePrice));
+                System.out.println("Deluxe room created");
                 nDelRooms++;
             }
             for (int i = 0; i < executive; i++) {
-                String name = "E" + nExeRooms + 1;
+                String name = "E" + (nExeRooms + 1);
                 rooms.add(new ExecutiveRoom(name, basePrice));
+                System.out.println("Executive room created");
                 nExeRooms++;
             }
 
     }
-
+    /*
+    public void setNStdRooms (int n) {
+        nStdRooms = n;
+    }
+    public void setNDelRooms (int n) {
+        nDelRooms = n;
+    }
+    public void setNExeRooms (int n) {
+        nExeRooms = n;
+    }
     public int getNStdRooms () {
         return nStdRooms;
     }
@@ -53,8 +65,33 @@ public class Hotel {
     public int getNExeRooms () {
         return nExeRooms;
     }
-
+    */
+    public int getTotalRooms() {
+        System.out.println("Number of rooms: " +rooms.size() + "in hotel" +name);
+        return rooms.size();
+    }
     public void setHotelName(String name) {
         this.name = name;
     }
+    public ArrayList<String> getRoomsNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Room room : rooms) {
+            names.add(room.getName());
+        }
+        return names;
+    }
+    public boolean hasNoReservations (int roomIndex) {
+        if (rooms.get(roomIndex).hasNoReservations()) {
+            return true;
+        }
+        return false;
+    }
+    public void deleteRoom (int iRoom) {
+        rooms.remove(iRoom);
+    }
+    /*
+    public Room getRoom(int i) {
+        return rooms.get(i);
+    }
+     */
 }

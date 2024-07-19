@@ -11,8 +11,19 @@ public class Room {
         this.reservations = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public char getRoomIdentifier() {
         return name.charAt(0);
+    }
+
+    public boolean hasNoReservations() {
+        if (reservations.size() == 0) {
+            return true;
+        }
+        return false;
     }
 
 
