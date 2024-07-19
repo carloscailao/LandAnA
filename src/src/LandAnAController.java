@@ -24,7 +24,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         }
         else if (e.getActionCommand().equals("Manage Hotels")) {
             if (manager.getNHotels() >= 1) {
-                gui.manageHotelPanel();
+                gui.manageHotelsPanel(manager.getHotels());
             }
             else if (manager.getNHotels() == 0) {
                 gui.noHotelsPrompt();
@@ -32,8 +32,8 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         }
         else if (e.getActionCommand().equals("View Hotels")) {
             if (manager.getNHotels() >= 1) {
-                System.out.println("Manage hotel");
-                gui.manageHotelPanel();
+                System.out.println("View hotels");
+                //gui.manageHotelsPanel();
             }
             else if (manager.getNHotels() == 0) {
                 gui.noHotelsPrompt();
@@ -47,7 +47,10 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         }
         else if (e.getActionCommand().equals("Add Hotel")) {
             String hotelName = gui.getHotelName();
-            if (manager.isUniqueHotel(hotelName)) {
+            if (gui.getHotelName().isEmpty()) {
+                gui.emptyFieldPrompt();
+            }
+            else if (manager.isUniqueHotel(hotelName)) {
                 manager.addHotel(new Hotel(hotelName));
                 gui.createRoomsPanel(manager.getHotel(manager.getNHotels() - 1));
             }
@@ -66,6 +69,23 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 manager.createRooms(manager.getNHotels() - 1, gui.getSldStandard().getValue(), gui.getSldDeluxe().getValue(), gui.getSldStandard().getValue());
                 gui.successPrompt();
                 gui.mainMenuPanel();
+            }
+        }
+        else if(e.getActionCommand().equals("Manage Hotel")) {
+            gui.manageHotelPanel(manager.getHotel(gui.getcBoxHotels().getSelectedIndex()));
+        }
+        else if(e.getActionCommand().equals("Change Hotel Name")) {
+            if (gui.getHotelName().isEmpty()) {
+                gui.emptyFieldPrompt();
+            }
+            else if(!manager.isUniqueHotel(gui.getHotelName())) {
+                gui.notUniquePrompt(gui.getHotelName());
+            }
+            else {
+                if (gui.confirmPrompt() == 0) {
+                    manager.setHotelName(gui.getcBoxHotels().getSelectedIndex(), gui.getHotelName());
+                    gui.manageHotelPanel(manager.getHotel(gui.getcBoxHotels().getSelectedIndex()));
+                }
             }
         }
     }

@@ -53,4 +53,8 @@ public class Hotel {
     public int getNExeRooms () {
         return nExeRooms;
     }
+
+    public void setHotelName(String name) {
+        this.name = name;
+    }
 }

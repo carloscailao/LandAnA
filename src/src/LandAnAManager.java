@@ -39,4 +39,12 @@ public class LandAnAManager {
     public void createRooms(int index, int std, int deluxe, int executive) {
         hotels.get(index).createRooms(std, deluxe, executive);
     }
+
+    public ArrayList<Hotel> getHotels () {
+        return hotels;
+    }
+
+    public void setHotelName(int index, String name) {
+        hotels.get(index).setHotelName(name);
+    }
 }

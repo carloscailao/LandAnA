@@ -14,23 +14,33 @@ public class LandAnAGUI extends JFrame {
     final String sage = "#D8F3DC";
 
     private JButton btnCreateHotel;
-    private JButton btnManageHotel;
+    private JButton btnManageHotels;
     private JButton btnViewHotels;
     private JButton btnSimulateBooking;
     private JButton btnBack;
     private JButton btnAddHotel;
     private JButton btnCreateRooms;
+    private JButton btnManageHotel;
+    private JButton btnChangeName;
+    private JButton btnAddStandardRoom;
+    private JButton btnAddDeluxeRoom;
+    private JButton btnAddExecutiveRoom;
 
     private JTextField tfHotelName;
 
     private JSlider sldStandard;
     private JSlider sldDeluxe;
     private JSlider sldExecutive;
+    private JSlider sldAddStandard;
+    private JSlider sldAddDeluxe;
+    private JSlider sldAddExecutive;
 
     private JLabel lblStd;
     private JLabel lblDeluxe;
     private JLabel lblExecutive;
     private JLabel lblTotal;
+
+    private JComboBox<String> cBoxHotels;
 
     public LandAnAGUI() {
         super("LandAnA");
@@ -47,21 +57,29 @@ public class LandAnAGUI extends JFrame {
         btnCreateHotel = new JButton("Create Hotel");
         btnBack = new JButton("Back");
         btnAddHotel = new JButton("Add Hotel");
-        btnManageHotel = new JButton("Manage Hotels");
+        btnManageHotels = new JButton("Manage Hotels");
         btnViewHotels = new JButton("View Hotels");
         btnSimulateBooking = new JButton("Simulate Booking");
         btnCreateRooms = new JButton("Create Rooms");
+        btnManageHotel = new JButton("Manage Hotel");
+        btnChangeName = new JButton("Change Hotel Name");
+        btnAddStandardRoom = new JButton("Add Standard Rooms");
 
         tfHotelName = new JTextField(20);
 
         sldStandard = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 1);
         sldDeluxe = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 0);
         sldExecutive = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 0);
+        sldAddStandard= new JSlider(SwingConstants.HORIZONTAL, 1, 50, 1);
+        sldAddDeluxe= new JSlider(SwingConstants.HORIZONTAL, 1, 50, 1);
+        sldAddExecutive = new JSlider(SwingConstants.HORIZONTAL, 1, 50, 1);
 
         lblStd = new JLabel("Standard rooms: 1");
         lblDeluxe = new JLabel("Deluxe rooms: 0");
         lblExecutive = new JLabel("Executive rooms: 0");
         lblTotal = new JLabel("Total: 1");
+
+        cBoxHotels = new JComboBox<>();
 
         mainMenuPanel();
     }
@@ -69,12 +87,14 @@ public class LandAnAGUI extends JFrame {
     // Add action listeners to buttons
     public void setActionListener(ActionListener listener) {
         btnCreateHotel.addActionListener(listener);
-        btnManageHotel.addActionListener(listener);
+        btnManageHotels.addActionListener(listener);
         btnSimulateBooking.addActionListener(listener);
         btnViewHotels.addActionListener(listener);
         btnBack.addActionListener(listener);
         btnAddHotel.addActionListener(listener);
         btnCreateRooms.addActionListener(listener);
+        btnManageHotel.addActionListener(listener);
+        btnChangeName.addActionListener(listener);
     }
 
     public void setDocumentListener(DocumentListener listener) {
@@ -108,7 +128,7 @@ public class LandAnAGUI extends JFrame {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         buttonPanel.add(btnCreateHotel);
-        buttonPanel.add(btnManageHotel);
+        buttonPanel.add(btnManageHotels);
         buttonPanel.add(btnViewHotels);
         buttonPanel.add(btnSimulateBooking);
 
@@ -194,13 +214,161 @@ public class LandAnAGUI extends JFrame {
     }
     // Methods to switch panels or frames
 
-    public void manageHotelPanel() {
+    public void manageHotelsPanel(ArrayList<Hotel> hotels) {
         // Example: Replace center panel with ManageHotelsPanel
         JPanel manageHotelsPanel = new JPanel();
-        manageHotelsPanel.setBackground(Color.WHITE);
-        JLabel label = new JLabel("Manage Hotels Interface");
-        manageHotelsPanel.add(label);
+        manageHotelsPanel.setBackground(Color.decode(mint));
+        manageHotelsPanel.setLayout(new BorderLayout());
+
+        // Top panel with GridBagLayout
+        JPanel topPanel = new JPanel(new GridBagLayout());
+        topPanel.setBackground(Color.decode(green));
+        GridBagConstraints gbc = new GridBagConstraints();
+        // Back button
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(btnBack, gbc);
+        // Create Hotel label
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JLabel manageHotelsLabel = new JLabel("Manage Hotels", JLabel.CENTER);
+        manageHotelsLabel.setForeground(Color.decode(sage));
+        manageHotelsLabel.setFont(new Font("Verdana", Font.BOLD, 30));
+        topPanel.add(manageHotelsLabel, gbc);
+
+        JPanel chooseHotelPanel = new JPanel();
+        chooseHotelPanel.setLayout(new BoxLayout(chooseHotelPanel, Y_AXIS));
+        chooseHotelPanel.setBackground(Color.decode(mint));
+
+        JLabel chooseHotelLabel = new JLabel("Choose hotel:");
+        chooseHotelPanel.setForeground(Color.decode(green));
+        chooseHotelLabel.setFont(new Font("Verdana", Font.BOLD, 20));
+        chooseHotelLabel.setForeground(Color.decode(green));
+        chooseHotelLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        chooseHotelPanel.add(chooseHotelLabel);
+
+        JPanel hotelsPanel = new JPanel();
+        hotelsPanel.setLayout(new FlowLayout());
+        hotelsPanel.setBackground(Color.decode(mint));
+        cBoxHotels.removeAllItems();
+        for (Hotel hotel : hotels) {
+            cBoxHotels.addItem(hotel.getHotelName());
+        }
+        hotelsPanel.add(cBoxHotels);
+        hotelsPanel.add(btnManageHotel);
+        chooseHotelPanel.add(hotelsPanel);
+
+        manageHotelsPanel.add(chooseHotelPanel, BorderLayout.CENTER);
+        manageHotelsPanel.add(topPanel, BorderLayout.NORTH);
         setContentPane(manageHotelsPanel);
+        revalidate();
+        repaint();
+    }
+
+    public void manageHotelPanel(Hotel hotel) {
+        JPanel manageHotelPanel = new JPanel();
+        manageHotelPanel.setBackground(Color.decode(mint));
+        manageHotelPanel.setLayout(new BorderLayout());
+
+        // Top panel with GridBagLayout
+        JPanel topPanel = new JPanel(new GridBagLayout());
+        topPanel.setBackground(Color.decode(green));
+        GridBagConstraints gbc = new GridBagConstraints();
+        // Back button
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(btnBack, gbc);
+        // Create Hotel label
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JLabel manageHotelLabel = new JLabel("Manage Hotel " + hotel.getHotelName(), JLabel.CENTER);
+        manageHotelLabel.setForeground(Color.decode(sage));
+        manageHotelLabel.setFont(new Font("Verdana", Font.BOLD, 30));
+        topPanel.add(manageHotelLabel, gbc);
+
+        JPanel managePanel = new JPanel();
+        managePanel.setLayout(new BoxLayout(managePanel, BoxLayout.Y_AXIS));
+        managePanel.setBackground(Color.decode(mint));
+
+        // Change Hotel Name section
+        JPanel changeNamePanel = new JPanel();
+        changeNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        changeNamePanel.setBackground(Color.decode(mint));
+        tfHotelName.setPreferredSize(new Dimension(200, 30)); // Set preferred size for the text field
+        changeNamePanel.add(tfHotelName);
+        changeNamePanel.add(btnChangeName);
+        managePanel.add(changeNamePanel);
+        /*
+        // Add Rooms section
+        JPanel addRoomsPanel = new JPanel();
+        addRoomsPanel.setLayout(new BoxLayout(addRoomsPanel, BoxLayout.Y_AXIS));
+        addRoomsPanel.setBackground(Color.decode(mint));
+
+        // Standard Rooms
+        JLabel lblCurrentStd = new JLabel("Current Number of Standard Rooms: " + hotel.getNStdRooms());
+        lblCurrentStd.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addRoomsPanel.add(lblCurrentStd);
+        JPanel stdPanel = new JPanel();
+        stdPanel.setBackground(Color.decode(mint));
+        stdPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        stdPanel.add(sldAddStandard);
+        JLabel lblStdValue = new JLabel(String.valueOf(sldAddStandard.getValue()));
+        //sldAddStandard.addChangeListener(e -> lblStdValue.setText(String.valueOf(sldStandard.getValue())));
+
+        stdPanel.add(sldStandard);
+        stdPanel.add(lblStdValue);
+        stdPanel.add(btnAddStandardRoom);
+        addRoomsPanel.add(stdPanel);
+
+        // Deluxe Rooms
+        JLabel lblCurrentDeluxe = new JLabel("Current Number of Deluxe Rooms: " + hotel.getNDelRooms());
+        lblCurrentDeluxe.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addRoomsPanel.add(lblCurrentDeluxe);
+
+        JPanel deluxePanel = new JPanel();
+        deluxePanel.setBackground(Color.decode(mint));
+        deluxePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        sldDeluxe = new JSlider(1, 50);
+        JLabel lblDeluxeValue = new JLabel(String.valueOf(sldDeluxe.getValue()));
+        JButton btnAddDeluxe = new JButton("Add Deluxe Rooms");
+        sldDeluxe.addChangeListener(e -> lblDeluxeValue.setText(String.valueOf(sldDeluxe.getValue())));
+
+        deluxePanel.add(sldDeluxe);
+        deluxePanel.add(lblDeluxeValue);
+        deluxePanel.add(btnAddDeluxe);
+        addRoomsPanel.add(deluxePanel);
+
+        // Executive Rooms
+        JLabel lblCurrentExec = new JLabel("Current Number of Executive Rooms: " + hotel.getNExeRooms());
+        lblCurrentExec.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addRoomsPanel.add(lblCurrentExec);
+
+        JPanel execPanel = new JPanel();
+        execPanel.setBackground(Color.decode(mint));
+        execPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        sldExecutive = new JSlider(1, 50);
+        JLabel lblExecValue = new JLabel(String.valueOf(sldExecutive.getValue()));
+        JButton btnAddExec = new JButton("Add Executive Rooms");
+        sldExecutive.addChangeListener(e -> lblExecValue.setText(String.valueOf(sldExecutive.getValue())));
+
+        execPanel.add(sldExecutive);
+        execPanel.add(lblExecValue);
+        execPanel.add(btnAddExec);
+        addRoomsPanel.add(execPanel);
+
+        managePanel.add(addRoomsPanel);
+        */
+
+
+        manageHotelPanel.add(topPanel, BorderLayout.NORTH);
+        manageHotelPanel.add(managePanel, BorderLayout.CENTER);
+        setContentPane(manageHotelPanel);
         revalidate();
         repaint();
     }
@@ -332,5 +500,17 @@ public class LandAnAGUI extends JFrame {
 
     public void noHotelsPrompt() {
         JOptionPane.showMessageDialog(null, "You have no hotels!");
+    }
+
+    public JComboBox<String> getcBoxHotels() {
+        return cBoxHotels;
+    }
+
+    public void emptyFieldPrompt() {
+        JOptionPane.showMessageDialog(null, "Empty field!");
+    }
+
+    public int confirmPrompt() {
+        return JOptionPane.showConfirmDialog(null, "Confirm changes?");
     }
 }
