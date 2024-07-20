@@ -18,6 +18,7 @@ public class LandAnAGUI extends JFrame {
     private JComboBox<String> cBoxHotels;
     private JComboBox<String> cBoxRooms;
     private JSpinner spnAddRooms;
+    private JSpinner spnDouble;
 
     private JButton btnCreateHotel;
     private JButton btnManageHotels;
@@ -41,6 +42,8 @@ public class LandAnAGUI extends JFrame {
     private JButton btnAddExecutiveRoom;
 
     private JButton btnRemoveRoom;
+
+    private JButton btnUpdateBasePrice;
 
     public LandAnAGUI() {
         super("LandAnA");
@@ -67,6 +70,7 @@ public class LandAnAGUI extends JFrame {
         btnAddDeluxeRoom = new JButton("Add Deluxe Rooms");
         btnAddExecutiveRoom = new JButton("Add Executive Rooms");
         btnRemoveRoom = new JButton("Remove Room");
+        btnUpdateBasePrice = new JButton("Update Base Price");
 
         tfHotelName = new JTextField(20);
 
@@ -83,6 +87,7 @@ public class LandAnAGUI extends JFrame {
         cBoxRooms = new JComboBox<>();
 
         spnAddRooms = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
+        spnDouble = new JSpinner(new SpinnerNumberModel(100.0, 100.0, Double.POSITIVE_INFINITY, 0.1));
 
         mainMenuPanel();
     }
@@ -326,6 +331,14 @@ public class LandAnAGUI extends JFrame {
         removeRoomPanel.add(btnRemoveRoom);
         managePanel.add(removeRoomPanel);
 
+        // Panel to update base price
+        JPanel updatePricePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        updatePricePanel.setBackground(Color.decode(mint));
+        spnDouble.setPreferredSize(new Dimension(200,30));
+        updatePricePanel.add(spnDouble);
+        updatePricePanel.add(btnUpdateBasePrice);
+        managePanel.add(updatePricePanel);
+
         manageHotelPanel.add(topPanel, BorderLayout.NORTH);
         manageHotelPanel.add(managePanel, BorderLayout.CENTER);
         setContentPane(manageHotelPanel);
@@ -492,5 +505,11 @@ public class LandAnAGUI extends JFrame {
         for (String name : rooms) {
             cBoxRooms.addItem(name);
         }
+    }
+    public double getSpnDouble() {
+        return (double)spnDouble.getValue();
+    }
+    public void minBasePrompt() {
+        JOptionPane.showMessageDialog(null, "Minimum base price is 100.0");
     }
 }

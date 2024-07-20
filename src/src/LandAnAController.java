@@ -146,6 +146,14 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             }
             gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
         }
+        else if (e.getActionCommand().equals("Update Base Price")) {
+            if (gui.getSpnDouble() < 100) {
+                gui.minBasePrompt();
+            }
+            else if (gui.getSpnDouble() >= 100) {
+                manager.setBasePrice(manager.getHotelIndex(), gui.getSpnDouble());
+            }
+        }
     }
 
     public void insertUpdate(DocumentEvent e) {}

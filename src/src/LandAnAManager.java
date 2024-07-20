@@ -77,4 +77,7 @@ public class LandAnAManager {
     public int getHotelIndex() {
         return hotelIndex;
     }
+    public void setBasePrice(int iHotel, double price) {
+        hotels.get(iHotel).setHotelBasePrice(price);
+    }
 }
