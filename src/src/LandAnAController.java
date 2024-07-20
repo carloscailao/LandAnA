@@ -25,7 +25,8 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         }
         else if (e.getActionCommand().equals("Manage Hotels")) {
             if (manager.getNHotels() >= 1) {
-                gui.manageHotelsPanel(manager.getHotels());
+                gui.updatecBoxHotels(manager.getHotelNames());
+                gui.manageHotelsPanel();
             }
             else if (manager.getNHotels() == 0) {
                 gui.noHotelsPrompt();
@@ -175,6 +176,28 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 else {
                     gui.stillHasReservationsPrompt();
                 }
+            }
+        }
+        else if (e.getActionCommand().equals("Remove Reservation")) {
+            if (gui.pickRoomPrompt() == JOptionPane.OK_OPTION) {
+                gui.updatecBoxReservations(manager.getReservationNames(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex()));
+                if (gui.pickReservationPrompt() == JOptionPane.OK_OPTION) {
+                    if (gui.getcBoxReservations().getSelectedIndex() != -1) {
+                        if (gui.confirmPrompt() == 0) {
+                            manager.removeReservation(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex(),
+                                    gui.getcBoxReservations().getSelectedIndex());
+                            gui.updatecBoxReservations(manager.getReservationNames(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex()));
+                            gui.successPrompt();
+                        }
+                    }
+                }
+            }
+        }
+        else if(e.getActionCommand().equals("Remove Hotel")) {
+            if (gui.confirmPrompt() == 0) {
+                manager.removeHotel(manager.getHotelIndex());
+                gui.successPrompt();
+                gui.mainMenuPanel();
             }
         }
     }

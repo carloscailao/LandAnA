@@ -42,8 +42,12 @@ public class LandAnAManager {
         hotels.get(index).createRooms(std, deluxe, executive);
     }
 
-    public ArrayList<Hotel> getHotels () {
-        return hotels;
+    public ArrayList<String> getHotelNames () {
+        ArrayList<String> names = new ArrayList<>();
+        for (Hotel hotel : hotels) {
+            names.add(hotel.getHotelName());
+        }
+        return names;
     }
 
     public void setHotelName(int index, String name) {
@@ -82,5 +86,14 @@ public class LandAnAManager {
     }
     public boolean hotelHasNoReservations(int iHotel) {
         return hotels.get(iHotel).hasNoReservations();
+    }
+    public void removeReservation(int iHotel, int iRoom, int iRes) {
+        hotels.get(iHotel).removeReservation(iRoom, iRes);
+    }
+    public ArrayList<String> getReservationNames (int iHotel, int iRoom) {
+        return hotels.get(iHotel).getReservationNames(iRoom);
+    }
+    public void removeHotel(int iHotel) {
+        hotels.remove(iHotel);
     }
 }

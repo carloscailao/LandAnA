@@ -102,4 +102,10 @@ public class Hotel {
         }
         return true;
     }
+    public void removeReservation(int iRoom, int iRes) {
+        rooms.get(iRoom).removeReservation(iRes);
+    }
+    public ArrayList<String> getReservationNames (int iRoom) {
+        return rooms.get(iRoom).getReservationNames();
+    }
 }

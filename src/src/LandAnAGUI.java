@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
@@ -17,6 +18,7 @@ public class LandAnAGUI extends JFrame {
     private JTextField tfHotelName;
     private JComboBox<String> cBoxHotels;
     private JComboBox<String> cBoxRooms;
+    private JComboBox<String> cBoxReservations;
     private JSpinner spnAddRooms;
     private JSpinner spnDouble;
 
@@ -45,6 +47,10 @@ public class LandAnAGUI extends JFrame {
 
     private JButton btnUpdateBasePrice;
 
+    private JButton btnRemoveReservation;
+
+    private JButton btnRemoveHotel;
+
     public LandAnAGUI() {
         super("LandAnA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +69,9 @@ public class LandAnAGUI extends JFrame {
         btnManageHotels = new JButton("Manage Hotels");
         btnViewHotels = new JButton("View Hotels");
         btnSimulateBooking = new JButton("Simulate Booking");
+
         btnCreateRooms = new JButton("Create Rooms");
+
         btnManageHotel = new JButton("Manage Hotel");
         btnChangeName = new JButton("Change Hotel Name");
         btnAddStandardRoom = new JButton("Add Standard Rooms");
@@ -71,6 +79,8 @@ public class LandAnAGUI extends JFrame {
         btnAddExecutiveRoom = new JButton("Add Executive Rooms");
         btnRemoveRoom = new JButton("Remove Room");
         btnUpdateBasePrice = new JButton("Update Base Price");
+        btnRemoveReservation = new JButton("Remove Reservation");
+        btnRemoveHotel = new JButton("Remove Hotel");
 
         tfHotelName = new JTextField(20);
 
@@ -85,6 +95,7 @@ public class LandAnAGUI extends JFrame {
 
         cBoxHotels = new JComboBox<>();
         cBoxRooms = new JComboBox<>();
+        cBoxReservations = new JComboBox<>();
 
         spnAddRooms = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         spnDouble = new JSpinner(new SpinnerNumberModel(100.0, 100.0, Double.POSITIVE_INFINITY, 0.1));
@@ -108,6 +119,8 @@ public class LandAnAGUI extends JFrame {
         btnAddExecutiveRoom.addActionListener(listener);
         btnRemoveRoom.addActionListener(listener);
         btnUpdateBasePrice.addActionListener(listener);
+        btnRemoveReservation.addActionListener(listener);
+        btnRemoveHotel.addActionListener(listener);
     }
 
     public void setDocumentListener(DocumentListener listener) {
@@ -227,7 +240,7 @@ public class LandAnAGUI extends JFrame {
     }
     // Methods to switch panels or frames
 
-    public void manageHotelsPanel(ArrayList<Hotel> hotels) {
+    public void manageHotelsPanel() {
         JPanel manageHotelsPanel = new JPanel();
         manageHotelsPanel.setBackground(Color.decode(mint));
         manageHotelsPanel.setLayout(new BorderLayout());
@@ -265,10 +278,6 @@ public class LandAnAGUI extends JFrame {
         JPanel hotelsPanel = new JPanel();
         hotelsPanel.setLayout(new FlowLayout());
         hotelsPanel.setBackground(Color.decode(mint));
-        cBoxHotels.removeAllItems();
-        for (Hotel hotel : hotels) {
-            cBoxHotels.addItem(hotel.getHotelName());
-        }
         hotelsPanel.add(cBoxHotels);
         hotelsPanel.add(btnManageHotel);
         chooseHotelPanel.add(hotelsPanel);
@@ -339,6 +348,20 @@ public class LandAnAGUI extends JFrame {
         updatePricePanel.add(spnDouble);
         updatePricePanel.add(btnUpdateBasePrice);
         managePanel.add(updatePricePanel);
+
+        // Panel to remove reservation
+        JPanel removeReservationPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        removeReservationPanel.setBackground(Color.decode(mint));
+        removeReservationPanel.add(btnRemoveReservation);
+        managePanel.add(removeReservationPanel);
+
+        // Panel to modify date prices
+
+        // Panel to delete hotel
+        JPanel removeHotelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        removeHotelPanel.setBackground(Color.decode(mint));
+        removeHotelPanel.add(btnRemoveHotel);
+        managePanel.add(removeHotelPanel);
 
         manageHotelPanel.add(topPanel, BorderLayout.NORTH);
         manageHotelPanel.add(managePanel, BorderLayout.CENTER);
@@ -495,7 +518,7 @@ public class LandAnAGUI extends JFrame {
         return (int)spnAddRooms.getValue();
     }
     public int pickRoomPrompt() {
-        return JOptionPane.showOptionDialog(null, cBoxRooms,"Choose room to remove: ",
+        return JOptionPane.showOptionDialog(null, cBoxRooms,"Choose room: ",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
     }
     public JComboBox<String> getcBoxRooms() {
@@ -515,5 +538,24 @@ public class LandAnAGUI extends JFrame {
     }
     public void stillHasReservationsPrompt() {
         JOptionPane.showMessageDialog(null, "Hotel still has ongoing reservations");
+    }
+    public void updatecBoxReservations(ArrayList<String> reservations) {
+        cBoxReservations.removeAllItems();
+        for (String name : reservations) {
+            cBoxReservations.addItem(name);
+        }
+    }
+    public int pickReservationPrompt() {
+        return JOptionPane.showOptionDialog(null, cBoxReservations, "Choose a reservation: ",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,null,null,null);
+    }
+    public JComboBox<String> getcBoxReservations() {
+        return cBoxReservations;
+    }
+    public void updatecBoxHotels(ArrayList<String> hotels) {
+        cBoxHotels.removeAllItems();
+        for (String name : hotels) {
+            cBoxHotels.addItem(name);
+        }
     }
 }

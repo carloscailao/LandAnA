@@ -29,6 +29,16 @@ public abstract class Room {
     public boolean hasNoReservations() {
         return reservations.isEmpty();
     }
+    public void removeReservation(int iRes) {
+        reservations.remove(iRes);
+    }
+    public ArrayList<String> getReservationNames () {
+        ArrayList<String> names = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            names.add(reservation.getName());
+        }
+        return names;
+    }
 
 
 }
