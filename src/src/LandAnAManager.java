@@ -53,8 +53,8 @@ public class LandAnAManager {
     public ArrayList<String> getRoomsNames(int index) {
         return hotels.get(index).getRoomsNames();
     }
-    public boolean hasNoReservations (int iHotel, int iRoom) {
-        return hotels.get(iHotel).hasNoReservations(iRoom);
+    public boolean roomHasNoReservations (int iHotel, int iRoom) {
+        return hotels.get(iHotel).roomHasNoReservations(iRoom);
     }
     public void deleteRoom (int iHotel, int iRoom) {
         //char type = hotels.get(iHotel).getRoom(iRoom).getRoomIdentifier();
@@ -79,5 +79,8 @@ public class LandAnAManager {
     }
     public void setBasePrice(int iHotel, double price) {
         hotels.get(iHotel).setHotelBasePrice(price);
+    }
+    public boolean hotelHasNoReservations(int iHotel) {
+        return hotels.get(iHotel).hasNoReservations();
     }
 }

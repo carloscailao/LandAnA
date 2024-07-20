@@ -107,6 +107,7 @@ public class LandAnAGUI extends JFrame {
         btnAddDeluxeRoom.addActionListener(listener);
         btnAddExecutiveRoom.addActionListener(listener);
         btnRemoveRoom.addActionListener(listener);
+        btnUpdateBasePrice.addActionListener(listener);
     }
 
     public void setDocumentListener(DocumentListener listener) {
@@ -511,5 +512,8 @@ public class LandAnAGUI extends JFrame {
     }
     public void minBasePrompt() {
         JOptionPane.showMessageDialog(null, "Minimum base price is 100.0");
+    }
+    public void stillHasReservationsPrompt() {
+        JOptionPane.showMessageDialog(null, "Hotel still has ongoing reservations");
     }
 }

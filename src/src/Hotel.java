@@ -19,6 +19,9 @@ public class Hotel {
 
     public void setHotelBasePrice(double price) {
         this.basePrice = price;
+        for (Room room : rooms) {
+            room.updateBasePrice(basePrice);
+        }
     }
 
     public String getHotelName() {
@@ -80,11 +83,8 @@ public class Hotel {
         }
         return names;
     }
-    public boolean hasNoReservations (int roomIndex) {
-        if (rooms.get(roomIndex).hasNoReservations()) {
-            return true;
-        }
-        return false;
+    public boolean roomHasNoReservations (int roomIndex) {
+        return rooms.get(roomIndex).hasNoReservations();
     }
     public void deleteRoom (int iRoom) {
         rooms.remove(iRoom);
@@ -94,4 +94,12 @@ public class Hotel {
         return rooms.get(i);
     }
      */
+    public boolean hasNoReservations () {
+        for (Room room : rooms) {
+            if (!room.hasNoReservations()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

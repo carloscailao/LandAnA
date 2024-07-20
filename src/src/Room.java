@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Room {
+public abstract class Room {
     final String name;
     private double price;
     private ArrayList<Reservation> reservations;
@@ -9,6 +9,12 @@ public class Room {
         this.name = name;
         this.price = price;
         this.reservations = new ArrayList<>();
+    }
+
+    public abstract double calculateRate(double basePrice);
+
+    public void updateBasePrice(double basePrice) {
+        price = calculateRate(basePrice);
     }
 
     public String getName() {

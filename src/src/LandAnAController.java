@@ -58,6 +58,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             else {
                 gui.notUniquePrompt(hotelName);
             }
+            manager.setHotelIndex(manager.getNHotels()-1);
         }
         else if(e.getActionCommand().equals("Create Rooms")) {
             if (gui.getRoomsTotal() > 50) {
@@ -72,6 +73,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 gui.successPrompt();
                 gui.mainMenuPanel();
             }
+            gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
         }
         else if(e.getActionCommand().equals("Manage Hotel")) {
             manager.setHotelIndex(gui.getcBoxHotels().getSelectedIndex());
@@ -87,6 +89,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             else {
                 if (gui.confirmPrompt() == 0) {
                     manager.setHotelName(manager.getHotelIndex(), gui.getHotelName());
+                    gui.successPrompt();
                     gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
                 }
             }
@@ -97,9 +100,11 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                     gui.excessRoomsPrompt();
                 }
                 else if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) <= 50) {
-                    manager.createRooms(manager.getHotelIndex(), gui.getSpnValue(), 0, 0);
-                    gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
-                    gui.successPrompt();
+                    if (gui.confirmPrompt() == 0) {
+                        manager.createRooms(manager.getHotelIndex(), gui.getSpnValue(), 0, 0);
+                        gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                        gui.successPrompt();
+                    }
                 }
                 gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
             }
@@ -110,9 +115,11 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                     gui.excessRoomsPrompt();
                 }
                 else if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) <= 50) {
-                    manager.createRooms(manager.getHotelIndex(), 0, gui.getSpnValue(), 0);
-                    gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
-                    gui.successPrompt();
+                    if (gui.confirmPrompt() == 0) {
+                        manager.createRooms(manager.getHotelIndex(), 0, gui.getSpnValue(), 0);
+                        gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                        gui.successPrompt();
+                    }
                 }
                 gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
             }
@@ -123,9 +130,11 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                     gui.excessRoomsPrompt();
                 }
                 else if ((gui.getSpnValue() + manager.getHotel(manager.getHotelIndex()).getTotalRooms()) <= 50) {
-                    manager.createRooms(manager.getHotelIndex(), 0, 0, gui.getSpnValue());
-                    gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
-                    gui.successPrompt();
+                    if (gui.confirmPrompt() == 0) {
+                        manager.createRooms(manager.getHotelIndex(), 0, 0, gui.getSpnValue());
+                        gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                        gui.successPrompt();
+                    }
                 }
                 gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
             }
@@ -134,10 +143,13 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             //gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
             if (manager.getHotel(manager.getHotelIndex()).getTotalRooms()>1) {
                 if (gui.pickRoomPrompt() == JOptionPane.OK_OPTION) {
-                    if (manager.hasNoReservations(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex())) {
-                        System.out.println("Deleting room");
-                        manager.deleteRoom(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex());
-                        gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                    if (manager.roomHasNoReservations(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex())) {
+                        if (gui.confirmPrompt() == 0) {
+                            System.out.println("Deleting room");
+                            manager.deleteRoom(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex());
+                            gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+                            gui.successPrompt();
+                        }
                     }
                 }
             }
@@ -151,7 +163,18 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 gui.minBasePrompt();
             }
             else if (gui.getSpnDouble() >= 100) {
-                manager.setBasePrice(manager.getHotelIndex(), gui.getSpnDouble());
+                System.out.println("Valid base price");
+                if (manager.hotelHasNoReservations(manager.getHotelIndex())) {
+                    System.out.println("Hotel has no reservations");
+                    if (gui.confirmPrompt() == 0) {
+                        System.out.println("Confirmed");
+                        manager.setBasePrice(manager.getHotelIndex(), gui.getSpnDouble());
+                        gui.successPrompt();
+                    }
+                }
+                else {
+                    gui.stillHasReservationsPrompt();
+                }
             }
         }
     }
