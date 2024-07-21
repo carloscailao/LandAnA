@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Hotel {
@@ -59,6 +60,7 @@ public class Hotel {
     public void setNExeRooms (int n) {
         nExeRooms = n;
     }
+    */
     public int getNStdRooms () {
         return nStdRooms;
     }
@@ -68,7 +70,7 @@ public class Hotel {
     public int getNExeRooms () {
         return nExeRooms;
     }
-    */
+
     public int getTotalRooms() {
         System.out.println("Number of rooms: " +rooms.size() + "in hotel" +name);
         return rooms.size();
@@ -108,6 +110,13 @@ public class Hotel {
     public ArrayList<String> getReservationNames (int iRoom) {
         return rooms.get(iRoom).getReservationNames();
     }
+    public ArrayList<String> getReservationNames () {
+        ArrayList<String> names = new ArrayList<>();
+        for (Room room : rooms) {
+            names.addAll(room.getReservationNames());
+        }
+        return names;
+    }
     public ArrayList<String> getAvailRooms(int in, int out) {
         ArrayList<String> names = new ArrayList<>();
         for (Room room : rooms) {
@@ -117,10 +126,26 @@ public class Hotel {
         }
         return names;
     }
-    public void newReservation(String name, ArrayList<Day> days, int iRoom) {
-        rooms.get(iRoom).newReservation(name, days);
+    public void newReservation(String name, ArrayList<Day> days, String room) {
+        getRoom(room).newReservation(name, days);
     }
-    public void newReservation(String name, int in, int out, int iRoom, double discount, boolean firstFree, ArrayList<Day> days) {
-        rooms.get(iRoom).newReservation(name, in, out, discount, firstFree, days);
+    public void newReservation(String name, String room, double discount, boolean firstFree, ArrayList<Day> days) {
+        getRoom(room).newReservation(name, discount, firstFree, days);
+    }
+    public Room getRoom(String roomName) {
+        for (Room room : rooms) {
+            if (roomName.equals(room.getName())) {
+                return room;
+            }
+        }
+        return null;
+    }
+    public double getEstEarnings() {
+        int i;
+        double hotelEstimateEarnings = 0.0;
+        for (i = 0; i < rooms.size(); i++) {
+            hotelEstimateEarnings += rooms.get(i).getEstEarnings();
+        }
+        return hotelEstimateEarnings;
     }
 }

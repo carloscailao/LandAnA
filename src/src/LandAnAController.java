@@ -34,8 +34,8 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         }
         else if (e.getActionCommand().equals("View Hotels")) {
             if (manager.getNHotels() >= 1) {
-                System.out.println("View hotels");
-                //gui.manageHotelsPanel();
+                gui.updatecBoxHotels(manager.getHotelNames());
+                gui.viewHotelsPanel();
             }
             else if (manager.getNHotels() == 0) {
                 gui.noHotelsPrompt();
@@ -147,7 +147,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             }
         }
         else if (e.getActionCommand().equals("Remove Room")) {
-            //gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+            gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
             if (manager.getHotel(manager.getHotelIndex()).getTotalRooms()>1) {
                 if (gui.pickRoomPrompt() == JOptionPane.OK_OPTION) {
                     if (manager.roomHasNoReservations(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex())) {
@@ -157,6 +157,9 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                             gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
                             gui.successPrompt();
                         }
+                    }
+                    else {
+                        gui.stillHasReservationsPrompt();
                     }
                 }
             }
@@ -185,6 +188,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             }
         }
         else if (e.getActionCommand().equals("Remove Reservation")) {
+            gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
             if (gui.pickRoomPrompt() == JOptionPane.OK_OPTION) {
                 gui.updatecBoxReservations(manager.getReservationNames(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex()));
                 if (gui.pickReservationPrompt() == JOptionPane.OK_OPTION) {
@@ -195,6 +199,9 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                             gui.updatecBoxReservations(manager.getReservationNames(manager.getHotelIndex(), gui.getcBoxRooms().getSelectedIndex()));
                             gui.successPrompt();
                         }
+                    }
+                    else {
+                        gui.emptyFieldPrompt();
                     }
                 }
             }
@@ -229,7 +236,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 if (gui.getTfDiscountText().isEmpty()) { // NO DISCOUNT
                     gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
                     if (gui.pickRoomPrompt() == 0) {
-                        manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), gui.getcBoxRooms().getSelectedIndex());
+                        manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), (String) gui.getcBoxRooms().getSelectedItem());
                         System.out.println("New reservation!");
                         gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
                     }
@@ -238,7 +245,7 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                     if (manager.isValidDiscount(gui.getTfDiscountText(), gui.getIn(),gui.getOut())) { // IF DISCOUNT VALID
                         gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(),gui.getOut()));
                         if (gui.pickRoomPrompt() == 0) {
-                            manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), gui.getcBoxRooms().getSelectedIndex(), gui.getTfDiscountText());
+                            manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), (String) gui.getcBoxRooms().getSelectedItem(), gui.getTfDiscountText());
                             System.out.println("New reservation with discount!");
                             gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
                         }
@@ -251,6 +258,21 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             else {
                 gui.noRoomsAvailablePrompt();
             }
+        }
+        else if(e.getActionCommand().equals("View Hotel")) {
+            manager.setHotelIndex(gui.getcBoxHotels().getSelectedIndex());
+            gui.updatecBoxRooms(manager.getRoomsNames(manager.getHotelIndex()));
+            gui.updatecBoxReservations(manager.getReservationsNames(manager.getHotelIndex()));
+            gui.viewHotelPanel(manager.getHotel(manager.getHotelIndex()));
+        }
+        else if(e.getActionCommand().equals("Check Date")) {
+            
+        }
+        else if(e.getActionCommand().equals("Check Room")) {
+
+        }
+        else if(e.getActionCommand().equals("Check Reservation")) {
+
         }
     }
 

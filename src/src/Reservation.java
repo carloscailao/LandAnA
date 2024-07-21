@@ -50,4 +50,7 @@ public class Reservation {
     public int getOut() {
         return out;
     }
+    public double getNetPrice() {
+        return netPrice;
+    }
 }
