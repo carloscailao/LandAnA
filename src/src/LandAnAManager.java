@@ -102,8 +102,8 @@ public class LandAnAManager {
         return hotels.get(hotelIndex).getAvailRooms(in, out);
     }
     public void setSpecial(int day, double rate) {
-        specialDays.add(new Day(day, rate));
-        System.out.println("Day " + day + " set to " + rate);
+        specialDays.add(new Day(day, rate/100));
+        System.out.println("Day " + day + " set to " + rate/100);
     }
     public boolean isValidDiscount(String code, int in, int out) {
         if (code.equals("I_WORK_HERE")) {
@@ -124,27 +124,37 @@ public class LandAnAManager {
         }
         return false;
     }
-    public void newReservation(String name, int in, int out, int iRoom) {
-        hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom);
-    }
-    public void newReservation(String name, int in, int out, int iRoom, String code) {
-        if (code.equals("I_WORK_HERE")) {
-            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.1, false);
-        }
-        if (code.equals("STAY4_GET1")) {
-            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.0, true);
-        }
-        if(code.equals("PAYDAY")) {
-            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.07, false);
-        }
-    }
-    public boolean hasSpecialDate(int in, int out) {
-        for (Day day : specialDays) {
-            if (day.getName() >= in && day.getName() < out) {
-                return true;
+    public double getDayRate(int day) {
+        for (Day specialDay : specialDays) {
+            if (day == specialDay.getName()) {
+                return specialDay.getRate();
             }
         }
-        return false;
+        return 1;
+    }
+    public void newReservation(String name, int in, int out, int iRoom) {
+        ArrayList<Day> days = new ArrayList<>();
+        for (int i = in; i <= out; i++) {
+            System.out.println("Adding new day " + i);
+            days.add(new Day(i, getDayRate(i)));
+        }
+        hotels.get(getHotelIndex()).newReservation(name, days, iRoom);
+    }
+    public void newReservation(String name, int in, int out, int iRoom, String code) {
+        ArrayList<Day> days = new ArrayList<>();
+        for (int i = in; i <= out; i++) {
+            System.out.println("Adding new day " + i);
+            days.add(new Day(i, getDayRate(i)));
+        }
+        if (code.equals("I_WORK_HERE")) {
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.1, false, days);
+        }
+        if (code.equals("STAY4_GET1")) {
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.0, true, days);
+        }
+        if(code.equals("PAYDAY")) {
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.07, false, days);
+        }
     }
 
 }

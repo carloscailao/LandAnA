@@ -117,10 +117,10 @@ public class Hotel {
         }
         return names;
     }
-    public void newReservation(String name, int in, int out, int iRoom) {
-        rooms.get(iRoom).newReservation(name, in, out);
+    public void newReservation(String name, ArrayList<Day> days, int iRoom) {
+        rooms.get(iRoom).newReservation(name, days);
     }
-    public void newReservation(String name, int in, int out, int iRoom, double discount, boolean firstFree) {
-        rooms.get(iRoom).newReservation(name, in, out, discount, firstFree);
+    public void newReservation(String name, int in, int out, int iRoom, double discount, boolean firstFree, ArrayList<Day> days) {
+        rooms.get(iRoom).newReservation(name, in, out, discount, firstFree, days);
     }
 }

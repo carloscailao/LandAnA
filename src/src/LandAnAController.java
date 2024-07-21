@@ -225,12 +225,13 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             else if (gui.getIn() >= gui.getOut()) { // INVALID DATE
                 gui.invalidDatePrompt();
             }
-            else { // YES GUEST NAME, YES DATE
+            else if (!manager.getAvailRooms(gui.getIn(), gui.getOut()).isEmpty()){ // CORRECT INPUT, WITH AVAIL ROOMS
                 if (gui.getTfDiscountText().isEmpty()) { // NO DISCOUNT
                     gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
                     if (gui.pickRoomPrompt() == 0) {
                         manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), gui.getcBoxRooms().getSelectedIndex());
                         System.out.println("New reservation!");
+                        gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
                     }
                 }
                 else { // YES DISCOUNT
@@ -239,12 +240,16 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                         if (gui.pickRoomPrompt() == 0) {
                             manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), gui.getcBoxRooms().getSelectedIndex(), gui.getTfDiscountText());
                             System.out.println("New reservation with discount!");
+                            gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
                         }
                     }
                     else { // INVALID DISCOUNT
                         gui.invalidDiscountPrompt();
                     }
                 }
+            }
+            else {
+                gui.noRoomsAvailablePrompt();
             }
         }
     }

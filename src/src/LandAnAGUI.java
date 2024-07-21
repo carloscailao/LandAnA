@@ -748,4 +748,7 @@ public class LandAnAGUI extends JFrame {
     public void invalidDatePrompt() {
         JOptionPane.showMessageDialog(null, "Invalid dates");
     }
+    public void noRoomsAvailablePrompt() {
+        JOptionPane.showMessageDialog(null, "No rooms available.");
+    }
 }

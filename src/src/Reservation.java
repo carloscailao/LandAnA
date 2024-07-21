@@ -1,23 +1,45 @@
+import java.util.ArrayList;
+
 public class Reservation {
-    private String guestName;
-    private int in;
-    private int out;
-    private int daysStayed;
-    private String name;
-    private double rmRate;
-    private double dcRate;
-    private double grossPrice;
-    private double netPrice;
+    final String guestName;
+    final int in;
+    final int out;
+    final int daysStayed;
+    final String name;
+    final double dcRate;
+    final double grossPrice;
+    final double netPrice;
+    private boolean firstFree;
 
-    public Reservation (String guestName, int in, int out, double rmRate, double dcRate, boolean firstDayFree) {
+    public Reservation (String guestName, double grossPrice, ArrayList<Day> days) {
         this.guestName = guestName;
-        this.in = in;
-        this.out = out;
-        this.daysStayed = (out-in);
-        this.name = guestName + in + "-" + out;
+        this.grossPrice = grossPrice; // room and day rates apply. no discounts
+        this.netPrice = grossPrice;
 
-        this.grossPrice = (rmRate * daysStayed);
-        this.netPrice = (grossPrice - (grossPrice * dcRate));
+        this.in = days.getFirst().getName();
+        this.out = days.getLast().getName();
+        this.daysStayed = days.size();
+        this.name = guestName + " " + in + "-" + out;
+        this.dcRate = 0.0;
+    }
+
+    public Reservation (String guestName, double grossPrice, double discount, boolean firstFree, ArrayList<Day> days) {
+        this.guestName = guestName;
+        this.grossPrice = grossPrice;
+        if (firstFree) {
+            this.netPrice = grossPrice;
+            this.firstFree = true;
+        }
+        else {
+            this.netPrice = grossPrice - (grossPrice * discount);
+            this.firstFree = false;
+        }
+        this.in = days.getFirst().getName();
+        this.out = days.getLast().getName();
+        this.daysStayed = days.size();
+        this.name = guestName + " " + in + "-" + out;
+        this.dcRate = discount;
+
     }
     public String getName() {
         return name;

@@ -41,25 +41,41 @@ public abstract class Room {
         return names;
     }
 
-    public boolean isAvailable(int in, int out) {
-        int i;
-        for (i = 0; i < reservations.size(); i++) {
-            if (in > reservations.get(i).getIn() && reservations.get(i).getOut() < in) {
-                return false;
-            }
-            if (out > reservations.get(i).getIn() && in < reservations.get(i).getOut()) {
+    public boolean isAvailable(int newIn, int newOut) {
+        for (Reservation reservation : reservations) {
+            int existingIn = reservation.getIn();
+            int existingOut = reservation.getOut();
+
+            if ((existingIn < newIn && newIn < existingOut) || // Condition 1
+                    (existingIn < newOut && newOut < existingOut) || // Condition 2
+                    (newIn <= existingIn && newOut >= existingOut) || // Condition 3
+                    (existingIn <= newIn && existingOut >= newOut)) { // Condition 4
                 return false;
             }
         }
         return true;
     }
-    public void newReservation(String name, int in, int out) {
+    public void newReservation(String name, ArrayList<Day> days) {
         double grossPrice = 0.0;
-
-        reservations.add(new Reservation(name, in, out, grossPrice));
+        // calculate gross price here
+        for (Day day : days) {
+            grossPrice += day.getRate() * rate; // day rate * room rate
+        }
+        reservations.add(new Reservation(name, grossPrice, days));
     }
-    public void newReservation(String name, int in, int out, double discount, boolean firstFree) {
-        reservations.add(new Reservation(name, in, out, grossPrice, discount));
+    public void newReservation(String name, int in, int out, double discount, boolean firstFree, ArrayList<Day> days) {
+        double grossPrice = 0.0;
+        if (firstFree) {
+            for (int i = in + 1; i < out; i++) {
+                grossPrice += days.get(i).getRate() * rate;
+            }
+        }
+        else {
+            for (Day day : days) {
+                grossPrice += day.getRate() * rate; // day rate * room rate
+            }
+        }
+        reservations.add(new Reservation(name, grossPrice, discount, firstFree, days));
     }
 
 }
