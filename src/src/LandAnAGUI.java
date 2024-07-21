@@ -720,7 +720,7 @@ public class LandAnAGUI extends JFrame {
         return (int)spnOut.getValue();
     }
     public int getModifyDate() {
-        return cBoxDay.getSelectedIndex();
+        return (int)cBoxDay.getSelectedItem();
     }
     public int modifyDatePrompt() {
         JPanel panel = new JPanel();

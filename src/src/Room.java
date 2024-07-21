@@ -18,7 +18,6 @@ public abstract class Room {
     }
 
 
-
     public String getName() {
         return name;
     }
@@ -54,6 +53,13 @@ public abstract class Room {
         }
         return true;
     }
+    public void newReservation(String name, int in, int out) {
+        double grossPrice = 0.0;
 
+        reservations.add(new Reservation(name, in, out, grossPrice));
+    }
+    public void newReservation(String name, int in, int out, double discount, boolean firstFree) {
+        reservations.add(new Reservation(name, in, out, grossPrice, discount));
+    }
 
 }

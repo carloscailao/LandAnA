@@ -2,8 +2,8 @@ public class Day {
     private int name;
     private double rate;
 
-    public Day(int name) {
-        this.rate = 1.0;
+    public Day(int name, double rate) {
+        this.rate = rate;
         this.name = name;
     }
 

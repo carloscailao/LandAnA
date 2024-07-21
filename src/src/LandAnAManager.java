@@ -3,15 +3,12 @@ import java.util.ArrayList;
 public class LandAnAManager {
     private ArrayList<Hotel> hotels;
     private int hotelIndex;
-    final ArrayList<Day> days;
+    final ArrayList<Day> specialDays;
 
     public LandAnAManager () {
         this.hotels = new ArrayList<>();
         this.hotelIndex = -1;
-        days = new ArrayList<>();
-        for(int i = 0; i < 31; i++) {
-            days.add(new Day(i+1));
-        }
+        specialDays = new ArrayList<>();
     }
 
     public void addHotel(Hotel hotel) {
@@ -104,9 +101,9 @@ public class LandAnAManager {
     public ArrayList<String> getAvailRooms(int in, int out) {
         return hotels.get(hotelIndex).getAvailRooms(in, out);
     }
-    public void setSpecial(int iDay, double rate) {
-        days.get(iDay).setRate(rate);
-        System.out.println("Day " + days.get(iDay).getName() + " set to " +rate);
+    public void setSpecial(int day, double rate) {
+        specialDays.add(new Day(day, rate));
+        System.out.println("Day " + day + " set to " + rate);
     }
     public boolean isValidDiscount(String code, int in, int out) {
         if (code.equals("I_WORK_HERE")) {
@@ -132,14 +129,22 @@ public class LandAnAManager {
     }
     public void newReservation(String name, int in, int out, int iRoom, String code) {
         if (code.equals("I_WORK_HERE")) {
-            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 10.0);
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.1, false);
         }
         if (code.equals("STAY4_GET1")) {
-            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.0);
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.0, true);
         }
         if(code.equals("PAYDAY")) {
-            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 7.0);
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.07, false);
         }
+    }
+    public boolean hasSpecialDate(int in, int out) {
+        for (Day day : specialDays) {
+            if (day.getName() >= in && day.getName() < out) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
