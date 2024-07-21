@@ -108,4 +108,38 @@ public class LandAnAManager {
         days.get(iDay).setRate(rate);
         System.out.println("Day " + days.get(iDay).getName() + " set to " +rate);
     }
+    public boolean isValidDiscount(String code, int in, int out) {
+        if (code.equals("I_WORK_HERE")) {
+            return true;
+        }
+        if (code.equals("STAY4_GET1")) {
+            if ((out - in) >= 5 ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if(code.equals("PAYDAY")) {
+            boolean includesDay15 = in <= 15 && out > 15;
+            boolean includesDay30 = in <= 30 && out > 30;
+            return includesDay15 || includesDay30;
+        }
+        return false;
+    }
+    public void newReservation(String name, int in, int out, int iRoom) {
+        hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom);
+    }
+    public void newReservation(String name, int in, int out, int iRoom, String code) {
+        if (code.equals("I_WORK_HERE")) {
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 10.0);
+        }
+        if (code.equals("STAY4_GET1")) {
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 0.0);
+        }
+        if(code.equals("PAYDAY")) {
+            hotels.get(getHotelIndex()).newReservation(name, in, out, iRoom, 7.0);
+        }
+    }
+
 }

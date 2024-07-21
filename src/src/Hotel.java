@@ -117,4 +117,10 @@ public class Hotel {
         }
         return names;
     }
+    public void newReservation(String name, int in, int out, int iRoom) {
+
+    }
+    public void newReservation(String name, int in, int out, int iRoom, double discount) {
+
+    }
 }

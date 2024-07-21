@@ -59,6 +59,7 @@ public class LandAnAGUI extends JFrame {
     private JButton btnRemoveHotel;
 
     private JButton btnChooseHotel;
+    private JTextField tfDiscount;
     private JButton btnCheckAvailable;
 
     public LandAnAGUI() {
@@ -96,6 +97,7 @@ public class LandAnAGUI extends JFrame {
         btnModifyDate = new JButton("Modify Date Price");
 
         tfName = new JTextField(20);
+        tfDiscount = new JTextField(20);
 
         sldStandard = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 1);
         sldDeluxe = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 0);
@@ -497,10 +499,9 @@ public class LandAnAGUI extends JFrame {
         // name
         JPanel guestNamePanel = new JPanel();
         guestNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        JLabel guestNameLabel = new JLabel("Name: ");
+        JLabel guestNameLabel = new JLabel("(REQUIRED) Name: ");
         guestNamePanel.setBackground(Color.decode(mint));
         guestNamePanel.setForeground(Color.decode(green));
-        guestNameLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
         tfName.setText("");
         tfName.setPreferredSize(new Dimension(200, 30));
         guestNamePanel.add(guestNameLabel);
@@ -519,6 +520,18 @@ public class LandAnAGUI extends JFrame {
         inOutPanel.add(outLabel);
         inOutPanel.add(spnOut);
         guestPanel.add(inOutPanel);
+
+        //discount code
+        JPanel discountPanel = new JPanel();
+        discountPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        discountPanel.setBackground(Color.decode(mint));
+        JLabel lblDiscount = new JLabel("(OPTIONAL) Discount code: ");
+        tfDiscount.setText("");
+        tfDiscount.setPreferredSize(new Dimension(200, 30));
+        discountPanel.add(lblDiscount);
+        discountPanel.add(tfDiscount);
+        guestPanel.add(discountPanel);
+
 
         // check availability
         JPanel checkPanel = new JPanel();
@@ -725,5 +738,14 @@ public class LandAnAGUI extends JFrame {
     }
     public JLabel getLblRate() {
         return lblRate;
+    }
+    public String getTfDiscountText() {
+        return tfDiscount.getText();
+    }
+    public void invalidDiscountPrompt() {
+        JOptionPane.showMessageDialog(null, "Invalid discount code");
+    }
+    public void invalidDatePrompt() {
+        JOptionPane.showMessageDialog(null, "Invalid dates");
     }
 }

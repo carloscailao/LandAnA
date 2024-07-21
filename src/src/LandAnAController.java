@@ -219,12 +219,32 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             gui.bookingPanel(manager.getHotel(manager.getHotelIndex()));
         }
         else if (e.getActionCommand().equals("Check Availability")) {
-            if (gui.getTfNameText().isEmpty()) {
+            if (gui.getTfNameText().isEmpty()) { // NO GUEST NAME
                 gui.emptyFieldPrompt();
             }
-            else {
-                gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
-                gui.pickRoomPrompt();
+            else if (gui.getIn() >= gui.getOut()) { // INVALID DATE
+                gui.invalidDatePrompt();
+            }
+            else { // YES GUEST NAME, YES DATE
+                if (gui.getTfDiscountText().isEmpty()) { // NO DISCOUNT
+                    gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
+                    if (gui.pickRoomPrompt() == 0) {
+                        manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), gui.getcBoxRooms().getSelectedIndex());
+                        System.out.println("New reservation!");
+                    }
+                }
+                else { // YES DISCOUNT
+                    if (manager.isValidDiscount(gui.getTfDiscountText(), gui.getIn(),gui.getOut())) { // IF DISCOUNT VALID
+                        gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(),gui.getOut()));
+                        if (gui.pickRoomPrompt() == 0) {
+                            manager.newReservation(gui.getTfNameText(), gui.getIn(), gui.getOut(), gui.getcBoxRooms().getSelectedIndex(), gui.getTfDiscountText());
+                            System.out.println("New reservation with discount!");
+                        }
+                    }
+                    else { // INVALID DISCOUNT
+                        gui.invalidDiscountPrompt();
+                    }
+                }
             }
         }
     }
