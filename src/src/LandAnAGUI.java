@@ -19,6 +19,7 @@ public class LandAnAGUI extends JFrame {
     private JComboBox<String> cBoxHotels;
     private JComboBox<String> cBoxRooms;
     private JComboBox<String> cBoxReservations;
+    private JComboBox<Integer> cBoxDay;
     private JSpinner spnAddRooms;
     private JSpinner spnDouble;
     private JSpinner spnIn;
@@ -50,6 +51,10 @@ public class LandAnAGUI extends JFrame {
     private JButton btnUpdateBasePrice;
 
     private JButton btnRemoveReservation;
+
+    private JButton btnModifyDate;
+    private JSlider sldRate;
+    private JLabel lblRate;
 
     private JButton btnRemoveHotel;
 
@@ -88,21 +93,32 @@ public class LandAnAGUI extends JFrame {
         btnRemoveHotel = new JButton("Remove Hotel");
         btnChooseHotel = new JButton("Choose Hotel");
         btnCheckAvailable = new JButton("Check Availability");
+        btnModifyDate = new JButton("Modify Date Price");
 
         tfName = new JTextField(20);
 
         sldStandard = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 1);
         sldDeluxe = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 0);
         sldExecutive = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 0);
+        sldRate = new JSlider(SwingConstants.HORIZONTAL, 50, 150, 100);
+        sldRate.setMajorTickSpacing(25); // Major ticks at 75%, 100%, and 125%
+        sldRate.setMinorTickSpacing(5);  // Minor ticks every 5%
+        sldRate.setPaintTicks(true);
+        sldRate.setPaintLabels(true);
 
         lblStd = new JLabel("Standard rooms: 1");
         lblDeluxe = new JLabel("Deluxe rooms: 0");
         lblExecutive = new JLabel("Executive rooms: 0");
         lblTotal = new JLabel("Total: 1");
+        lblRate = new JLabel("100%");
 
         cBoxHotels = new JComboBox<>();
         cBoxRooms = new JComboBox<>();
         cBoxReservations = new JComboBox<>();
+        cBoxDay = new JComboBox<>();
+        for (int i = 1; i <= 31; i++) {
+            cBoxDay.addItem(i);
+        }
 
         spnAddRooms = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         spnDouble = new JSpinner(new SpinnerNumberModel(100.0, 100.0, Double.POSITIVE_INFINITY, 0.1));
@@ -132,6 +148,7 @@ public class LandAnAGUI extends JFrame {
         btnRemoveHotel.addActionListener(listener);
         btnChooseHotel.addActionListener(listener);
         btnCheckAvailable.addActionListener(listener);
+        btnModifyDate.addActionListener(listener);
     }
 
     public void setDocumentListener(DocumentListener listener) {
@@ -142,6 +159,7 @@ public class LandAnAGUI extends JFrame {
         sldStandard.addChangeListener(listener);
         sldDeluxe.addChangeListener(listener);
         sldExecutive.addChangeListener(listener);
+        sldRate.addChangeListener(listener);
     }
 
     public void mainMenuPanel() {
@@ -164,10 +182,17 @@ public class LandAnAGUI extends JFrame {
         buttonPanel.setBackground(Color.decode(mint));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
+        // Panel to modify date prices
+        JPanel modifyDatePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        modifyDatePanel.setBackground(Color.decode(mint));
+        modifyDatePanel.add(cBoxDay);
+        modifyDatePanel.add(btnModifyDate);
+
         buttonPanel.add(btnCreateHotel);
         buttonPanel.add(btnManageHotels);
         buttonPanel.add(btnViewHotels);
         buttonPanel.add(btnSimulateBooking);
+        buttonPanel.add(modifyDatePanel);
 
         mainMenuPanel.add(buttonPanel);
         mainMenuPanel.add(Box.createVerticalGlue());
@@ -367,8 +392,6 @@ public class LandAnAGUI extends JFrame {
         removeReservationPanel.setBackground(Color.decode(mint));
         removeReservationPanel.add(btnRemoveReservation);
         managePanel.add(removeReservationPanel);
-
-        // Panel to modify date prices
 
         // Panel to delete hotel
         JPanel removeHotelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -682,5 +705,25 @@ public class LandAnAGUI extends JFrame {
     }
     public int getOut() {
         return (int)spnOut.getValue();
+    }
+    public int getModifyDate() {
+        return cBoxDay.getSelectedIndex();
+    }
+    public int modifyDatePrompt() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, Y_AXIS));
+        panel.add(sldRate);
+        panel.add(lblRate);
+        return JOptionPane.showOptionDialog(null, panel, "Set date price rate: ",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 100);
+    }
+    public int getRate() {
+        return sldRate.getValue();
+    }
+    public JSlider getSldRate() {
+        return sldRate;
+    }
+    public JLabel getLblRate() {
+        return lblRate;
     }
 }

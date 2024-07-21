@@ -199,6 +199,14 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 }
             }
         }
+        else if(e.getActionCommand().equals("Modify Date Price")) {
+            if (gui.modifyDatePrompt() == 0) {
+                if (gui.confirmPrompt() == 0) {
+                    manager.setSpecial(gui.getModifyDate(), gui.getRate());
+                    gui.successPrompt();
+                }
+            }
+        }
         else if(e.getActionCommand().equals("Remove Hotel")) {
             if (gui.confirmPrompt() == 0) {
                 manager.removeHotel(manager.getHotelIndex());
@@ -238,6 +246,8 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         } else if (e.getSource() == gui.getSldExecutive()) {
             gui.getLblExecutive().setText("Executive rooms: " + gui.getSldExecutive().getValue());
             gui.getLblTotal().setText("Total: " + (gui.getSldStandard().getValue()+gui.getSldDeluxe().getValue()+gui.getSldExecutive().getValue()));
+        } else if(e.getSource() == gui.getSldRate()) {
+            gui.getLblRate().setText(gui.getRate()+"%");
         }
     }
 }

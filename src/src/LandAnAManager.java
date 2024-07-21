@@ -3,10 +3,15 @@ import java.util.ArrayList;
 public class LandAnAManager {
     private ArrayList<Hotel> hotels;
     private int hotelIndex;
+    final ArrayList<Day> days;
 
     public LandAnAManager () {
         this.hotels = new ArrayList<>();
         this.hotelIndex = -1;
+        days = new ArrayList<>();
+        for(int i = 0; i < 31; i++) {
+            days.add(new Day(i+1));
+        }
     }
 
     public void addHotel(Hotel hotel) {
@@ -98,5 +103,9 @@ public class LandAnAManager {
     }
     public ArrayList<String> getAvailRooms(int in, int out) {
         return hotels.get(hotelIndex).getAvailRooms(in, out);
+    }
+    public void setSpecial(int iDay, double rate) {
+        days.get(iDay).setRate(rate);
+        System.out.println("Day " + days.get(iDay).getName() + " set to " +rate);
     }
 }
