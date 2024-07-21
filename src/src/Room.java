@@ -2,20 +2,22 @@ import java.util.ArrayList;
 
 public abstract class Room {
     final String name;
-    private double price;
+    private double rate;
     private ArrayList<Reservation> reservations;
 
     public Room(String name, double price) {
         this.name = name;
-        this.price = price;
+        this.rate = price;
         this.reservations = new ArrayList<>();
     }
 
-    public abstract double calculateRate(double basePrice);
+    public abstract double updateRate(double basePrice);
 
     public void updateBasePrice(double basePrice) {
-        price = calculateRate(basePrice);
+        rate = updateRate(basePrice);
     }
+
+
 
     public String getName() {
         return name;
@@ -38,6 +40,19 @@ public abstract class Room {
             names.add(reservation.getName());
         }
         return names;
+    }
+
+    public boolean isAvailable(int in, int out) {
+        int i;
+        for (i = 0; i < reservations.size(); i++) {
+            if (in > reservations.get(i).getIn() && reservations.get(i).getOut() < in) {
+                return false;
+            }
+            if (out > reservations.get(i).getIn() && in < reservations.get(i).getOut()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

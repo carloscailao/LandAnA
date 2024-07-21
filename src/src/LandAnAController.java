@@ -42,14 +42,20 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             }
         }
         else if (e.getActionCommand().equals("Simulate Booking")) {
-            gui.simulateBookingPanel();
+            if (manager.getNHotels() >= 1) {
+                gui.updatecBoxHotels(manager.getHotelNames());
+                gui.simulateBookingPanel();
+            }
+            else if (manager.getNHotels() == 0) {
+                gui.noHotelsPrompt();
+            }
         }
         else if (e.getActionCommand().equals("Back")) {
             gui.mainMenuPanel();
         }
         else if (e.getActionCommand().equals("Add Hotel")) {
-            String hotelName = gui.getHotelName();
-            if (gui.getHotelName().isEmpty()) {
+            String hotelName = gui.getTfNameText();
+            if (gui.getTfNameText().isEmpty()) {
                 gui.emptyFieldPrompt();
             }
             else if (manager.isUniqueHotel(hotelName)) {
@@ -81,15 +87,15 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
         }
         else if(e.getActionCommand().equals("Change Hotel Name")) {
-            if (gui.getHotelName().isEmpty()) {
+            if (gui.getTfNameText().isEmpty()) {
                 gui.emptyFieldPrompt();
             }
-            else if(!manager.isUniqueHotel(gui.getHotelName())) {
-                gui.notUniquePrompt(gui.getHotelName());
+            else if(!manager.isUniqueHotel(gui.getTfNameText())) {
+                gui.notUniquePrompt(gui.getTfNameText());
             }
             else {
                 if (gui.confirmPrompt() == 0) {
-                    manager.setHotelName(manager.getHotelIndex(), gui.getHotelName());
+                    manager.setHotelName(manager.getHotelIndex(), gui.getTfNameText());
                     gui.successPrompt();
                     gui.manageHotelPanel(manager.getHotel(manager.getHotelIndex()));
                 }
@@ -198,6 +204,19 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
                 manager.removeHotel(manager.getHotelIndex());
                 gui.successPrompt();
                 gui.mainMenuPanel();
+            }
+        }
+        else if (e.getActionCommand().equals("Choose Hotel")) {
+            manager.setHotelIndex(gui.getcBoxHotels().getSelectedIndex());
+            gui.bookingPanel(manager.getHotel(manager.getHotelIndex()));
+        }
+        else if (e.getActionCommand().equals("Check Availability")) {
+            if (gui.getTfNameText().isEmpty()) {
+                gui.emptyFieldPrompt();
+            }
+            else {
+                gui.updatecBoxRooms(manager.getAvailRooms(gui.getIn(), gui.getOut()));
+                gui.pickRoomPrompt();
             }
         }
     }

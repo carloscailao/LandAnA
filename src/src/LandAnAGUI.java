@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.Flow;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
 
@@ -15,12 +15,14 @@ public class LandAnAGUI extends JFrame {
     final String sage = "#D8F3DC";
 
     private JButton btnBack;
-    private JTextField tfHotelName;
+    private JTextField tfName;
     private JComboBox<String> cBoxHotels;
     private JComboBox<String> cBoxRooms;
     private JComboBox<String> cBoxReservations;
     private JSpinner spnAddRooms;
     private JSpinner spnDouble;
+    private JSpinner spnIn;
+    private JSpinner spnOut;
 
     private JButton btnCreateHotel;
     private JButton btnManageHotels;
@@ -50,6 +52,9 @@ public class LandAnAGUI extends JFrame {
     private JButton btnRemoveReservation;
 
     private JButton btnRemoveHotel;
+
+    private JButton btnChooseHotel;
+    private JButton btnCheckAvailable;
 
     public LandAnAGUI() {
         super("LandAnA");
@@ -81,8 +86,10 @@ public class LandAnAGUI extends JFrame {
         btnUpdateBasePrice = new JButton("Update Base Price");
         btnRemoveReservation = new JButton("Remove Reservation");
         btnRemoveHotel = new JButton("Remove Hotel");
+        btnChooseHotel = new JButton("Choose Hotel");
+        btnCheckAvailable = new JButton("Check Availability");
 
-        tfHotelName = new JTextField(20);
+        tfName = new JTextField(20);
 
         sldStandard = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 1);
         sldDeluxe = new JSlider(SwingConstants.HORIZONTAL, 0, 50, 0);
@@ -99,6 +106,8 @@ public class LandAnAGUI extends JFrame {
 
         spnAddRooms = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         spnDouble = new JSpinner(new SpinnerNumberModel(100.0, 100.0, Double.POSITIVE_INFINITY, 0.1));
+        spnIn = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
+        spnOut = new JSpinner(new SpinnerNumberModel(2, 2, 31, 1));
 
         mainMenuPanel();
     }
@@ -121,10 +130,12 @@ public class LandAnAGUI extends JFrame {
         btnUpdateBasePrice.addActionListener(listener);
         btnRemoveReservation.addActionListener(listener);
         btnRemoveHotel.addActionListener(listener);
+        btnChooseHotel.addActionListener(listener);
+        btnCheckAvailable.addActionListener(listener);
     }
 
     public void setDocumentListener(DocumentListener listener) {
-        tfHotelName.getDocument().addDocumentListener(listener);
+        tfName.getDocument().addDocumentListener(listener);
     }
 
     public void setChangeListener(ChangeListener listener) {
@@ -226,7 +237,8 @@ public class LandAnAGUI extends JFrame {
         // center of center panel
         JPanel namePanel = new JPanel(new FlowLayout());
         namePanel.setBackground(Color.decode(sage));
-        namePanel.add(tfHotelName);
+        tfName.setText("");
+        namePanel.add(tfName);
         namePanel.add(btnAddHotel);
         centerPanel.add(namePanel, BorderLayout.CENTER);
 
@@ -321,8 +333,9 @@ public class LandAnAGUI extends JFrame {
         JPanel changeNamePanel = new JPanel();
         changeNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); // No gaps
         changeNamePanel.setBackground(Color.decode(mint));
-        tfHotelName.setPreferredSize(new Dimension(200, 30)); // Set preferred size for the text field
-        changeNamePanel.add(tfHotelName);
+        tfName.setPreferredSize(new Dimension(200, 30)); // Set preferred size for the text field
+        tfName.setText("");
+        changeNamePanel.add(tfName);
         changeNamePanel.add(btnChangeName);
         managePanel.add(changeNamePanel);
 
@@ -382,12 +395,118 @@ public class LandAnAGUI extends JFrame {
     }
 
     public void simulateBookingPanel() {
-        // Example: Replace center panel with SimulateBookingPanel
         JPanel simulateBookingPanel = new JPanel();
-        simulateBookingPanel.setBackground(Color.WHITE);
-        JLabel label = new JLabel("Simulate Booking Interface");
-        simulateBookingPanel.add(label);
+        simulateBookingPanel.setBackground(Color.decode(mint));
+        simulateBookingPanel.setLayout(new BorderLayout());
+
+        // Top panel with GridBagLayout
+        JPanel topPanel = new JPanel(new GridBagLayout());
+        topPanel.setBackground(Color.decode(green));
+        GridBagConstraints gbc = new GridBagConstraints();
+        // Back button
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(btnBack, gbc);
+        // Create Hotel label
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JLabel manageHotelsLabel = new JLabel("Simulate Booking", JLabel.CENTER);
+        manageHotelsLabel.setForeground(Color.decode(sage));
+        manageHotelsLabel.setFont(new Font("Verdana", Font.BOLD, 30));
+        topPanel.add(manageHotelsLabel, gbc);
+
+        JPanel chooseHotelPanel = new JPanel();
+        chooseHotelPanel.setLayout(new BoxLayout(chooseHotelPanel, Y_AXIS));
+        chooseHotelPanel.setBackground(Color.decode(mint));
+
+        JLabel chooseHotelLabel = new JLabel("Choose hotel:");
+        chooseHotelPanel.setForeground(Color.decode(green));
+        chooseHotelLabel.setFont(new Font("Verdana", Font.BOLD, 20));
+        chooseHotelLabel.setForeground(Color.decode(green));
+        chooseHotelLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        chooseHotelPanel.add(chooseHotelLabel);
+
+        JPanel hotelsPanel = new JPanel();
+        hotelsPanel.setLayout(new FlowLayout());
+        hotelsPanel.setBackground(Color.decode(mint));
+        hotelsPanel.add(cBoxHotels);
+        hotelsPanel.add(btnChooseHotel);
+        chooseHotelPanel.add(hotelsPanel);
+
+        simulateBookingPanel.add(chooseHotelPanel, BorderLayout.CENTER);
+        simulateBookingPanel.add(topPanel, BorderLayout.NORTH);
         setContentPane(simulateBookingPanel);
+        revalidate();
+        repaint();
+    }
+
+    public void bookingPanel(Hotel hotel) {
+        JPanel bookingPanel = new JPanel();
+        bookingPanel.setBackground(Color.decode(mint));
+        bookingPanel.setLayout(new BorderLayout());
+
+        // Top panel with GridBagLayout
+        JPanel topPanel = new JPanel(new GridBagLayout());
+        topPanel.setBackground(Color.decode(green));
+        GridBagConstraints gbc = new GridBagConstraints();
+        // Back button
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(btnBack, gbc);
+        // Create Hotel label
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JLabel bookingLabel = new JLabel("Booking in hotel " + hotel.getHotelName(), JLabel.CENTER);
+        bookingLabel.setForeground(Color.decode(sage));
+        bookingLabel.setFont(new Font("Verdana", Font.BOLD, 30));
+        topPanel.add(bookingLabel, gbc);
+
+        JPanel guestPanel = new JPanel();
+        guestPanel.setLayout(new BoxLayout(guestPanel, BoxLayout.Y_AXIS));
+        guestPanel.setBackground(Color.decode(mint));
+
+        // name
+        JPanel guestNamePanel = new JPanel();
+        guestNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JLabel guestNameLabel = new JLabel("Name: ");
+        guestNamePanel.setBackground(Color.decode(mint));
+        guestNamePanel.setForeground(Color.decode(green));
+        guestNameLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        tfName.setText("");
+        tfName.setPreferredSize(new Dimension(200, 30));
+        guestNamePanel.add(guestNameLabel);
+        guestNamePanel.add(tfName);
+        guestPanel.add(guestNamePanel);
+
+        // in and out
+        JPanel inOutPanel = new JPanel();
+        inOutPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JLabel inLabel = new JLabel("Check in: ");
+        JLabel outLabel = new JLabel("Check out: ");
+        inOutPanel.setBackground(Color.decode(mint));
+        inOutPanel.setForeground(Color.decode(green));
+        inOutPanel.add(inLabel);
+        inOutPanel.add(spnIn);
+        inOutPanel.add(outLabel);
+        inOutPanel.add(spnOut);
+        guestPanel.add(inOutPanel);
+
+        // check availability
+        JPanel checkPanel = new JPanel();
+        checkPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        checkPanel.setBackground(Color.decode(mint));
+        checkPanel.add(btnCheckAvailable);
+        guestPanel.add(checkPanel);
+
+        bookingPanel.add(topPanel, BorderLayout.NORTH);
+        bookingPanel.add(guestPanel, BorderLayout.CENTER);
+        setContentPane(bookingPanel);
         revalidate();
         repaint();
     }
@@ -396,8 +515,8 @@ public class LandAnAGUI extends JFrame {
         JOptionPane.showMessageDialog(null, "Hotel " + hotelName + " already exists!");
     }
 
-    public String getHotelName() {
-        return tfHotelName.getText();
+    public String getTfNameText() {
+        return tfName.getText();
     }
 
     public void createRoomsPanel(Hotel hotel) {
@@ -557,5 +676,11 @@ public class LandAnAGUI extends JFrame {
         for (String name : hotels) {
             cBoxHotels.addItem(name);
         }
+    }
+    public int getIn() {
+        return (int)spnIn.getValue();
+    }
+    public int getOut() {
+        return (int)spnOut.getValue();
     }
 }

@@ -96,4 +96,7 @@ public class LandAnAManager {
     public void removeHotel(int iHotel) {
         hotels.remove(iHotel);
     }
+    public ArrayList<String> getAvailRooms(int in, int out) {
+        return hotels.get(hotelIndex).getAvailRooms(in, out);
+    }
 }

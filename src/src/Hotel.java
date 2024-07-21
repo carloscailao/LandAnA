@@ -108,4 +108,13 @@ public class Hotel {
     public ArrayList<String> getReservationNames (int iRoom) {
         return rooms.get(iRoom).getReservationNames();
     }
+    public ArrayList<String> getAvailRooms(int in, int out) {
+        ArrayList<String> names = new ArrayList<>();
+        for (Room room : rooms) {
+            if (room.isAvailable(in, out)) {
+                names.add(room.getName());
+            }
+        }
+        return names;
+    }
 }

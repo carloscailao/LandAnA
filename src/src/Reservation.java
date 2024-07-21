@@ -3,7 +3,7 @@ public class Reservation {
     private int in;
     private int out;
     private String name;
-    public Reservation (String guestName, int in, int out) {
+    public Reservation (String guestName, int in, int out, double rmRate) {
         this.guestName = guestName;
         this.in = in;
         this.out = out;
@@ -11,5 +11,11 @@ public class Reservation {
     }
     public String getName() {
         return name;
+    }
+    public int getIn() {
+        return in;
+    }
+    public int getOut() {
+        return out;
     }
 }

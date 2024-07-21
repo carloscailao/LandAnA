@@ -4,7 +4,7 @@ public class DeluxeRoom extends Room{
     }
 
     @Override
-    public double calculateRate(double basePrice) {
+    public double updateRate(double basePrice) {
         return basePrice + (basePrice * 0.20);
     }
 }
