@@ -553,7 +553,6 @@ public class LandAnAGUI extends JFrame {
 
         centerPanel.add(midCenterPanel, BorderLayout.CENTER);
 
-
         viewHotelPanel.add(topPanel, BorderLayout.NORTH);
         viewHotelPanel.add(centerPanel, BorderLayout.CENTER);
         setContentPane(viewHotelPanel);
@@ -892,5 +891,20 @@ public class LandAnAGUI extends JFrame {
     }
     public void noRoomsAvailablePrompt() {
         JOptionPane.showMessageDialog(null, "No rooms available.");
+    }
+    public void checkDatePrompt(int nAvail, int nBooked) {
+        JPanel dateInfoPanel = new JPanel();
+        dateInfoPanel.setLayout(new GridLayout(2, 1, 0, 0)); // 2 rows, 1 column
+
+        JLabel lblAvailRooms = new JLabel("Number of available Rooms: " + nAvail);
+        JLabel lblBookedRooms = new JLabel("Number of booked Rooms: " + nBooked);
+
+        dateInfoPanel.add(lblAvailRooms);
+        dateInfoPanel.add(lblBookedRooms);
+
+        JOptionPane.showMessageDialog(null, dateInfoPanel, "Room Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public int getDay() {
+        return (int)cBoxDay.getSelectedItem();
     }
 }

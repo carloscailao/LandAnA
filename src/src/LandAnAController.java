@@ -266,7 +266,8 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             gui.viewHotelPanel(manager.getHotel(manager.getHotelIndex()));
         }
         else if(e.getActionCommand().equals("Check Date")) {
-            
+            gui.checkDatePrompt(manager.getNAvailable(manager.getHotelIndex(), gui.getDay()),
+                    manager.getNBooked(manager.getHotelIndex(), gui.getDay()));
         }
         else if(e.getActionCommand().equals("Check Room")) {
 

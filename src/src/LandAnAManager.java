@@ -160,4 +160,10 @@ public class LandAnAManager {
         return hotels.get(iHotel).getReservationNames();
     }
 
+    public int getNAvailable(int iHotel, int date) {
+        return hotels.get(iHotel).getNAvailable(date);
+    }
+    public int getNBooked(int iHotel, int date) {
+        return hotels.get(iHotel).getNBooked(date);
+    }
 }

@@ -102,5 +102,13 @@ public abstract class Room {
         }
         return roomEstimateEarnings;
     }
+    public boolean isAvailable(int day) {
+        for (Reservation reservation : reservations) {
+            if (day >= reservation.getIn() && day < reservation.getOut()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

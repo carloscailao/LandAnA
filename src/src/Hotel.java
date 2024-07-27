@@ -148,4 +148,22 @@ public class Hotel {
         }
         return hotelEstimateEarnings;
     }
+    public int getNAvailable(int date) {
+        int n = 0;
+        for (Room room: rooms) {
+            if (room.isAvailable(date)) {
+                n++;
+            }
+        }
+        return n;
+    }
+    public int getNBooked(int date) {
+        int n = 0;
+        for (Room room : rooms) {
+            if (!room.isAvailable(date)) {
+                n++;
+            }
+        }
+        return n;
+    }
 }
