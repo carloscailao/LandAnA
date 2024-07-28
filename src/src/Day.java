@@ -10,9 +10,6 @@ public class Day {
     public int getName() {
         return name;
     }
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
     public double getRate() {
         return rate;
     }

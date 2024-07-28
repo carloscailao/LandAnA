@@ -17,15 +17,9 @@ public abstract class Room {
         rate = updateRate(basePrice);
     }
 
-
     public String getName() {
         return name;
     }
-    /*
-    public char getRoomIdentifier() {
-        return name.charAt(0);
-    }
-     */
 
     public boolean hasNoReservations() {
         return reservations.isEmpty();
@@ -57,12 +51,6 @@ public abstract class Room {
     }
     public void newReservation(String guest, ArrayList<Day> days) {
         double grossPrice = 0.0;
-        // calculate gross price here
-        /*
-        for (Day day : days) {
-            grossPrice += day.getRate() * rate; // day rate * room rate
-        }
-        */
         for (int i = 0; i < days.size() - 1; i++) {
             grossPrice += days.get(i).getRate() * rate;
         }
@@ -70,24 +58,12 @@ public abstract class Room {
     }
     public void newReservation(String guest, double discount, boolean firstFree, ArrayList<Day> days) {
         double grossPrice = 0.0;
-        /*
-        if (firstFree) {
-            for (int i = in + 1; i < out - 1; i++) {
-                grossPrice += days.get(i).getRate() * rate;
-            }
-        }
-         */
         if (firstFree) {
             for (int i = 1; i < days.size() - 1; i++) {
                 grossPrice += days.get(i).getRate() * rate;
             }
         }
         else {
-            /*
-            for (Day day : days) {
-                grossPrice += day.getRate() * rate; // day rate * room rate
-            }
-            */
             for (int i = 0; i < days.size() - 1; i++) {
                 grossPrice += days.get(i).getRate() * rate;
             }

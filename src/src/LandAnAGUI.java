@@ -946,7 +946,7 @@ public class LandAnAGUI extends JFrame {
                     .append("), ");
         }
         // Remove the last comma and space
-        if (modifiedDates.length() > 0) {
+        if (!modifiedDates.isEmpty()) {
             modifiedDates.setLength(modifiedDates.length() - 2);
         }
         JLabel lblModify = new JLabel(modifiedDates.toString());
@@ -969,5 +969,4 @@ public class LandAnAGUI extends JFrame {
 
         JOptionPane.showMessageDialog(null, resInfoPanel, "Reservation Information", JOptionPane.INFORMATION_MESSAGE);
     }
-
 }

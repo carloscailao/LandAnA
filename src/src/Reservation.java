@@ -62,9 +62,6 @@ public class Reservation {
     public String getGuestName() {
         return guestName;
     }
-    public String getRoomName() {
-        return roomName;
-    }
     public int getDaysStayed() {
         return daysStayed;
     }

@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Hotel {
@@ -50,17 +49,6 @@ public class Hotel {
             }
 
     }
-    /*
-    public void setNStdRooms (int n) {
-        nStdRooms = n;
-    }
-    public void setNDelRooms (int n) {
-        nDelRooms = n;
-    }
-    public void setNExeRooms (int n) {
-        nExeRooms = n;
-    }
-    */
     public int getNStdRooms () {
         return nStdRooms;
     }
@@ -91,11 +79,6 @@ public class Hotel {
     public void deleteRoom (int iRoom) {
         rooms.remove(iRoom);
     }
-    /*
-    public Room getRoom(int i) {
-        return rooms.get(i);
-    }
-     */
     public boolean hasNoReservations () {
         for (Room room : rooms) {
             if (!room.hasNoReservations()) {
