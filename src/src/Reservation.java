@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
 public class Reservation {
-    final String guestName;
-    final int in;
-    final int out;
-    final int daysStayed;
-    final String name;
-    final double dcRate;
-    final double grossPrice;
-    final double netPrice;
+    private String guestName;
+    private int in;
+    private int out;
+    private int daysStayed;
+    private String name;
+    private double dcRate;
+    private double grossPrice;
+    private double netPrice;
     private boolean firstFree;
-    final String roomName;
-    final ArrayList<Day> dayList;
+    private String roomName;
+    private ArrayList<Day> dayList;
 
     public Reservation (String roomName, String guestName, double grossPrice, ArrayList<Day> days) {
         this.guestName = guestName;

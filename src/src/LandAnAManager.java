@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class LandAnAManager {
     private ArrayList<Hotel> hotels;
     private int hotelIndex;
-    final ArrayList<Day> specialDays;
+    private ArrayList<Day> specialDays;
 
     public LandAnAManager () {
         this.hotels = new ArrayList<>();
@@ -22,14 +22,6 @@ public class LandAnAManager {
             }
         }
         return true;
-    }
-
-    public ArrayList<String> returnHotelNames() {
-        ArrayList<String> hotelNames = new ArrayList<>();
-        for (Hotel hotel : hotels) {
-            hotelNames.add(hotel.getHotelName());
-        }
-        return hotelNames;
     }
 
     public Hotel getHotel(int index) {
@@ -64,7 +56,6 @@ public class LandAnAManager {
     }
     public void deleteRoom (int iHotel, int iRoom) {
         hotels.get(iHotel).deleteRoom(iRoom);
-
     }
     public void setHotelIndex(int i) {
         hotelIndex = i;

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public abstract class Room {
-    final String name;
+    private String name;
     private double rate;
     private ArrayList<Reservation> reservations;
 

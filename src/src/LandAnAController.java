@@ -1,12 +1,10 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LandAnAController implements ActionListener, DocumentListener, ChangeListener {
+public class LandAnAController implements ActionListener, ChangeListener {
     final LandAnAGUI gui;
     final LandAnAManager manager;
 
@@ -15,13 +13,12 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
         this.manager = manager;
 
         gui.setActionListener(this);
-        gui.setDocumentListener(this);
         gui.setChangeListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Create Hotel")) {
-            gui.createHotelPanel(manager.returnHotelNames());
+            gui.createHotelPanel(manager.getHotelNames());
         }
         else if (e.getActionCommand().equals("Manage Hotels")) {
             if (manager.getNHotels() >= 1) {
@@ -281,12 +278,6 @@ public class LandAnAController implements ActionListener, DocumentListener, Chan
             }
         }
     }
-
-    public void insertUpdate(DocumentEvent e) {}
-
-    public void removeUpdate(DocumentEvent e) {}
-
-    public void changedUpdate(DocumentEvent e) {}
 
     @Override
     public void stateChanged(ChangeEvent e) {
