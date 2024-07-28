@@ -16,4 +16,7 @@ public class Day {
     public double getRate() {
         return rate;
     }
+    public boolean isSpecial () {
+        return rate != 1.0;
+    }
 }

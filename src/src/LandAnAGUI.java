@@ -929,17 +929,31 @@ public class LandAnAGUI extends JFrame {
     }
     public void checkReservationPanel(Room room, Reservation reservation) {
         JPanel resInfoPanel = new JPanel();
-        resInfoPanel.setLayout(new GridLayout(10, 1, 0, 0)); // 3 rows, 1 column
+        resInfoPanel.setLayout(new GridLayout(10, 1, 0, 0)); // 10 rows, 1 column
 
         JLabel lblGuest = new JLabel("Guest: " + reservation.getGuestName());
         JLabel lblRoom = new JLabel("Room: " + room.getName());
-        JLabel lblCheck = new JLabel("Check in: " +reservation.getIn() + " Check out: " +reservation.getOut());
+        JLabel lblCheck = new JLabel("Check in: " + reservation.getIn() + " Check out: " + reservation.getOut());
         JLabel lblCost = new JLabel("Cost Breakdown:");
-        JLabel lblRoomRate = new JLabel(" | Room Rate: " +room.getRate());
-        JLabel lblModify = new JLabel(" | Date Modified: ");
-        JLabel lblStayed = new JLabel(" | Days Stayed: " +reservation.getDaysStayed());
-        JLabel lblFree = new JLabel(" | Days Free: " +reservation.getFree());
-        JLabel lblDiscount = new JLabel(" | Discount Rate: " +reservation.getDiscount());
+        JLabel lblRoomRate = new JLabel(" | Room Rate: " + room.getRate());
+
+        // Create a string for modified dates
+        StringBuilder modifiedDates = new StringBuilder(" | Dates Modified: ");
+        for (Day day : reservation.getSpecialDays()) {
+            modifiedDates.append(day.getName())
+                    .append(" (")
+                    .append(day.getRate())
+                    .append("), ");
+        }
+        // Remove the last comma and space
+        if (modifiedDates.length() > 0) {
+            modifiedDates.setLength(modifiedDates.length() - 2);
+        }
+        JLabel lblModify = new JLabel(modifiedDates.toString());
+
+        JLabel lblStayed = new JLabel(" | Days Stayed: " + reservation.getDaysStayed());
+        JLabel lblFree = new JLabel(" | Days Free: " + reservation.getFree());
+        JLabel lblDiscount = new JLabel(" | Discount Rate: " + reservation.getDiscount());
         JLabel lblTotal = new JLabel("Total cost: " + reservation.getNetPrice());
 
         resInfoPanel.add(lblGuest);
@@ -953,7 +967,7 @@ public class LandAnAGUI extends JFrame {
         resInfoPanel.add(lblDiscount);
         resInfoPanel.add(lblTotal);
 
-        JOptionPane.showMessageDialog(null, resInfoPanel, "Room Information", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, resInfoPanel, "Reservation Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

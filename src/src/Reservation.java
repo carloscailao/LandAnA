@@ -11,12 +11,14 @@ public class Reservation {
     final double netPrice;
     private boolean firstFree;
     final String roomName;
+    final ArrayList<Day> dayList;
 
     public Reservation (String roomName, String guestName, double grossPrice, ArrayList<Day> days) {
         this.guestName = guestName;
         this.grossPrice = grossPrice; // room and day rates apply. no discounts
         this.netPrice = grossPrice;
         this.roomName = roomName;
+        this.dayList = days;
 
         this.in = days.getFirst().getName();
         this.out = days.getLast().getName();
@@ -29,6 +31,7 @@ public class Reservation {
         this.guestName = guestName;
         this.grossPrice = grossPrice;
         this.roomName = roomName;
+        this.dayList = days;
         if (firstFree) {
             this.netPrice = grossPrice;
             this.firstFree = true;
@@ -73,5 +76,14 @@ public class Reservation {
             return 1;
         }
         return 0;
+    }
+    public ArrayList<Day> getSpecialDays () {
+        ArrayList<Day> specialDays = new ArrayList<>();
+        for (Day day : dayList) {
+            if (day.isSpecial()) {
+                specialDays.add(day);
+            }
+        }
+        return specialDays;
     }
 }
