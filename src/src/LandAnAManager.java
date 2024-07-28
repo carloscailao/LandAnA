@@ -166,4 +166,16 @@ public class LandAnAManager {
     public int getNBooked(int iHotel, int date) {
         return hotels.get(iHotel).getNBooked(date);
     }
+    public double getRoomRate(int iHotel, int iRoom) {
+        return hotels.get(iHotel).getRoomRate(iRoom);
+    }
+    public ArrayList<Integer> getDays(int iHotel, int iRoom) {
+        return hotels.get(iHotel).getDays(iRoom);
+    }
+    public Room getRoom(String reservationName) {
+        return hotels.get(hotelIndex).getHotelRoom(reservationName);
+    }
+    public Reservation getReservation(String reservation) {
+        return hotels.get(hotelIndex).getReservation(reservation);
+    }
 }

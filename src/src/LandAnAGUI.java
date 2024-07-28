@@ -902,9 +902,58 @@ public class LandAnAGUI extends JFrame {
         dateInfoPanel.add(lblAvailRooms);
         dateInfoPanel.add(lblBookedRooms);
 
-        JOptionPane.showMessageDialog(null, dateInfoPanel, "Room Information", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, dateInfoPanel, "Date Information", JOptionPane.INFORMATION_MESSAGE);
     }
     public int getDay() {
         return (int)cBoxDay.getSelectedItem();
     }
+    public void checkRoomPrompt(String name, double rate, ArrayList<Integer> dates) {
+        JPanel roomInfoPanel = new JPanel();
+        roomInfoPanel.setLayout(new GridLayout(3, 1, 0, 0)); // 3 rows, 1 column
+
+        JLabel lblName = new JLabel("Name: " + name);
+        JLabel lblRate = new JLabel("Rate: " + rate);
+
+        // Concatenate all dates into a single string
+        StringBuilder datesStr = new StringBuilder("Available Dates: ");
+        for (Integer date : dates) {
+            datesStr.append(date).append(" ");
+        }
+        JLabel lblDates = new JLabel(datesStr.toString().trim());
+
+        roomInfoPanel.add(lblName);
+        roomInfoPanel.add(lblRate);
+        roomInfoPanel.add(lblDates);
+
+        JOptionPane.showMessageDialog(null, roomInfoPanel, "Room Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public void checkReservationPanel(Room room, Reservation reservation) {
+        JPanel resInfoPanel = new JPanel();
+        resInfoPanel.setLayout(new GridLayout(10, 1, 0, 0)); // 3 rows, 1 column
+
+        JLabel lblGuest = new JLabel("Guest: " + reservation.getGuestName());
+        JLabel lblRoom = new JLabel("Room: " + room.getName());
+        JLabel lblCheck = new JLabel("Check in: " +reservation.getIn() + " Check out: " +reservation.getOut());
+        JLabel lblCost = new JLabel("Cost Breakdown:");
+        JLabel lblRoomRate = new JLabel(" | Room Rate: " +room.getRate());
+        JLabel lblModify = new JLabel(" | Date Modified: ");
+        JLabel lblStayed = new JLabel(" | Days Stayed: " +reservation.getDaysStayed());
+        JLabel lblFree = new JLabel(" | Days Free: " +reservation.getFree());
+        JLabel lblDiscount = new JLabel(" | Discount Rate: " +reservation.getDiscount());
+        JLabel lblTotal = new JLabel("Total cost: " + reservation.getNetPrice());
+
+        resInfoPanel.add(lblGuest);
+        resInfoPanel.add(lblRoom);
+        resInfoPanel.add(lblCheck);
+        resInfoPanel.add(lblCost);
+        resInfoPanel.add(lblRoomRate);
+        resInfoPanel.add(lblModify);
+        resInfoPanel.add(lblStayed);
+        resInfoPanel.add(lblFree);
+        resInfoPanel.add(lblDiscount);
+        resInfoPanel.add(lblTotal);
+
+        JOptionPane.showMessageDialog(null, resInfoPanel, "Room Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

@@ -166,4 +166,37 @@ public class Hotel {
         }
         return n;
     }
+    public double getRoomRate(int iRoom) {
+        return rooms.get(iRoom).getRate();
+    }
+    public ArrayList<Integer> getDays(int iRoom) {
+        ArrayList<Integer> days = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            if (rooms.get(iRoom).isAvailable(i)) {
+                days.add(i);
+            }
+        }
+        return days;
+    }
+
+    public Room getHotelRoom(String reservationName) {
+        for (Room room : rooms) {
+            for (Reservation reservation : room.getReservations()) { // Assuming getReservations() returns a list of reservations
+                if (reservation.getName().equals(reservationName)) { // Assuming getName() returns the reservation name
+                    return room;
+                }
+            }
+        }
+        return null; // Return null if no room with the corresponding reservation name is found
+    }
+    public Reservation getReservation(String reservationName) {
+        for (Room room : rooms) {
+            for (Reservation reservation : room.getReservations()) {
+                if (reservation.getName().equals(reservationName)) {
+                    return reservation;
+                }
+            }
+        }
+        return null;
+    }
 }

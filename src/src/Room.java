@@ -55,7 +55,7 @@ public abstract class Room {
         }
         return true;
     }
-    public void newReservation(String name, ArrayList<Day> days) {
+    public void newReservation(String guest, ArrayList<Day> days) {
         double grossPrice = 0.0;
         // calculate gross price here
         /*
@@ -66,9 +66,9 @@ public abstract class Room {
         for (int i = 0; i < days.size() - 1; i++) {
             grossPrice += days.get(i).getRate() * rate;
         }
-        reservations.add(new Reservation(name, grossPrice, days));
+        reservations.add(new Reservation(name, guest, grossPrice, days));
     }
-    public void newReservation(String name, double discount, boolean firstFree, ArrayList<Day> days) {
+    public void newReservation(String guest, double discount, boolean firstFree, ArrayList<Day> days) {
         double grossPrice = 0.0;
         /*
         if (firstFree) {
@@ -92,7 +92,7 @@ public abstract class Room {
                 grossPrice += days.get(i).getRate() * rate;
             }
         }
-        reservations.add(new Reservation(name, grossPrice, discount, firstFree, days));
+        reservations.add(new Reservation(name, guest, grossPrice, discount, firstFree, days));
     }
     public double getEstEarnings() {
         int i;
@@ -110,5 +110,10 @@ public abstract class Room {
         }
         return true;
     }
-
+    public double getRate() {
+        return rate;
+    }
+    public ArrayList<Reservation> getReservations() {
+        return reservations;
+    }
 }
