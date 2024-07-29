@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentListener;
 
 import static javax.swing.BoxLayout.Y_AXIS;
 
@@ -69,6 +68,9 @@ public class LandAnAGUI extends JFrame {
     private JButton btnCheckRoom;
     private JButton btnCheckReservation;
 
+    /**
+     * JFrame maker
+     */
     public LandAnAGUI() {
         super("LandAnA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,6 +82,9 @@ public class LandAnAGUI extends JFrame {
         setIconImage(logo.getImage());
     }
 
+    /**
+     * Initializes all components for user interaction
+     */
     private void init() {
         btnCreateHotel = new JButton("Create Hotel");
         btnBack = new JButton("Back");
@@ -141,7 +146,10 @@ public class LandAnAGUI extends JFrame {
         mainMenuPanel();
     }
 
-    // Add action listeners to buttons
+    /**
+     * Adds listener to buttons
+     * @param listener controller
+     */
     public void setActionListener(ActionListener listener) {
         btnCreateHotel.addActionListener(listener);
         btnManageHotels.addActionListener(listener);
@@ -168,10 +176,10 @@ public class LandAnAGUI extends JFrame {
         btnCheckReservation.addActionListener(listener);
     }
 
-    public void setDocumentListener(DocumentListener listener) {
-        tfName.getDocument().addDocumentListener(listener);
-    }
-
+    /**
+     * Change listeners to sliders
+     * @param listener controller
+     */
     public void setChangeListener(ChangeListener listener) {
         sldStandard.addChangeListener(listener);
         sldDeluxe.addChangeListener(listener);
@@ -179,6 +187,9 @@ public class LandAnAGUI extends JFrame {
         sldRate.addChangeListener(listener);
     }
 
+    /**
+     * Main menu of program
+     */
     public void mainMenuPanel() {
         JPanel mainMenuPanel = new JPanel();
         mainMenuPanel.setBackground(Color.decode(mint));
@@ -219,6 +230,10 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Creation of hotel GUI
+     * @param hotelNames list of all current hotel names
+     */
     public void createHotelPanel(ArrayList<String> hotelNames) {
         JPanel createHotelPanel = new JPanel();
         createHotelPanel.setBackground(Color.decode(mint));
@@ -294,6 +309,9 @@ public class LandAnAGUI extends JFrame {
     }
     // Methods to switch panels or frames
 
+    /**
+     * Selection of hotel to manage
+     */
     public void manageHotelsPanel() {
         JPanel manageHotelsPanel = new JPanel();
         manageHotelsPanel.setBackground(Color.decode(mint));
@@ -343,6 +361,10 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Entails all managerial functions GUI
+     * @param hotel hotel of operation
+     */
     public void manageHotelPanel(Hotel hotel) {
         JPanel manageHotelPanel = new JPanel();
         manageHotelPanel.setBackground(Color.decode(mint));
@@ -423,6 +445,9 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Selection of hotel to view
+     */
     public void viewHotelsPanel() {
         JPanel viewHotelsPanel = new JPanel();
         viewHotelsPanel.setBackground(Color.decode(mint));
@@ -472,6 +497,10 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Entails all view features of hotel
+     * @param hotel hotel of operations
+     */
     public void viewHotelPanel(Hotel hotel) {
         JPanel viewHotelPanel = new JPanel();
         viewHotelPanel.setBackground(Color.decode(mint));
@@ -563,6 +592,9 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Selection of hotel upon simulation of booking
+     */
     public void simulateBookingPanel() {
         JPanel simulateBookingPanel = new JPanel();
         simulateBookingPanel.setBackground(Color.decode(mint));
@@ -612,6 +644,10 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Entails all features of hotel booking
+     * @param hotel hotel of operation
+     */
     public void bookingPanel(Hotel hotel) {
         JPanel bookingPanel = new JPanel();
         bookingPanel.setBackground(Color.decode(mint));
@@ -691,14 +727,26 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
+    /**
+     * Prompt for not unique hotel name
+     * @param hotelName attempted new hotel name
+     */
     public void notUniquePrompt(String hotelName) {
         JOptionPane.showMessageDialog(null, "Hotel " + hotelName + " already exists!");
     }
 
+    /**
+     * Gets text field text for name
+     * @return tfName
+     */
     public String getTfNameText() {
         return tfName.getText();
     }
 
+    /**
+     * Creation of multiple rooms upon creation of hotel
+     * @param hotel hotel of operation
+     */
     public void createRoomsPanel(Hotel hotel) {
         JPanel createRoomsPanel = new JPanel(new BorderLayout());
         createRoomsPanel.setBackground(Color.decode(mint));
@@ -749,123 +797,255 @@ public class LandAnAGUI extends JFrame {
         repaint();
     }
 
-    // Getters for sliders and labels
+    /**
+     * Gets slider for standard rooms creation
+     * @return slider for standard rooms creation
+     */
     public JSlider getSldStandard() {
         return sldStandard;
     }
 
+    /**
+     * Gets slider for deluxe rooms creation
+     * @return slider for deluxe rooms creation
+     */
     public JSlider getSldDeluxe() {
         return sldDeluxe;
     }
 
+    /**
+     * Gets slider for executive rooms creation
+     * @return slider for executive rooms creation
+     */
     public JSlider getSldExecutive() {
         return sldExecutive;
     }
 
+    /**
+     * Gets label for standard rooms count
+     * @return label for standard rooms count
+     */
     public JLabel getLblStd() {
         return lblStd;
     }
 
+    /**
+     * Gets label for deluxe rooms count
+     * @return label for deluxe rooms count
+     */
     public JLabel getLblDeluxe() {
         return lblDeluxe;
     }
 
+    /**
+     * Gets label for executive rooms count
+     * @return label for executive rooms count
+     */
     public JLabel getLblExecutive() {
         return lblExecutive;
     }
 
+    /**
+     * Gets label for total rooms count
+     * @return label for total rooms count
+     */
     public JLabel getLblTotal() {
         return lblTotal;
     }
 
+    /**
+     * Gets total number of rooms based on slider value
+     * @return total number of rooms based on slider value
+     */
     public int getRoomsTotal() {
         return sldStandard.getValue()+sldDeluxe.getValue()+sldExecutive.getValue();
     }
 
+    /**
+     * Prompt for maximum number of rooms
+     */
     public void excessRoomsPrompt() {
         JOptionPane.showMessageDialog(null, "Maximum number of rooms is 50.");
     }
 
+    /**
+     * Prompt for minimum number of rooms
+     */
     public void lackingRoomsPrompt() {
         JOptionPane.showMessageDialog(null, "Minimum number of rooms is 1.");
     }
 
+    /**
+     * Prompt for success of operation
+     */
     public void successPrompt() {
         JOptionPane.showMessageDialog(null, "Success!");
     }
 
+    /**
+     * Prompt for no hotels yet
+     */
     public void noHotelsPrompt() {
         JOptionPane.showMessageDialog(null, "You have no hotels!");
     }
 
+    /**
+     * Gets combo box of hotels
+     * @return combo box of hotels
+     */
     public JComboBox<String> getcBoxHotels() {
         return cBoxHotels;
     }
 
+    /**
+     * Prompt for an empty field
+     */
     public void emptyFieldPrompt() {
         JOptionPane.showMessageDialog(null, "Empty field!");
     }
 
+    /**
+     * Confirmation prompt
+     * @return user confirmation option
+     */
     public int confirmPrompt() {
         return JOptionPane.showConfirmDialog(null, "Confirm changes?");
     }
+
+    /**
+     * Prompt for adding rooms
+     * @return user option
+     */
     public int addRoomPrompt() {
         return JOptionPane.showOptionDialog(null, spnAddRooms, "Enter number of rooms to add: ",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
     }
+
+    /**
+     * Gets value of spinner of number of rooms
+     * @return value of spinner of number of rooms
+     */
     public int getSpnValue() {
         return (int)spnAddRooms.getValue();
     }
+
+    /**
+     * Prompt for picking a room
+     * @return user option
+     */
     public int pickRoomPrompt() {
         return JOptionPane.showOptionDialog(null, cBoxRooms,"Choose room: ",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
     }
+
+    /**
+     * Gets combo box of room names
+     * @return cBoxRooms
+     */
     public JComboBox<String> getcBoxRooms() {
         return cBoxRooms;
     }
+
+    /**
+     * Updates combo box of room names
+     * @param rooms array list of room names
+     */
     public void updatecBoxRooms(ArrayList<String> rooms) {
         cBoxRooms.removeAllItems();
         for (String name : rooms) {
             cBoxRooms.addItem(name);
         }
     }
+
+    /**
+     * Gets value of spinner for double
+     * @return value of spinner for double
+     */
     public double getSpnDouble() {
         return (double)spnDouble.getValue();
     }
+
+    /**
+     * Prompt for minimum base price
+     */
     public void minBasePrompt() {
         JOptionPane.showMessageDialog(null, "Minimum base price is 100.0");
     }
+
+    /**
+     * Prompt for ongoing reservations
+     */
     public void stillHasReservationsPrompt() {
         JOptionPane.showMessageDialog(null, "There are ongoing reservations.");
     }
+
+    /**
+     * Updates combo box of reservation names
+     * @param reservations array list of reservation names
+     */
     public void updatecBoxReservations(ArrayList<String> reservations) {
         cBoxReservations.removeAllItems();
         for (String name : reservations) {
             cBoxReservations.addItem(name);
         }
     }
+
+    /**
+     * Prompt for picking a reservation
+     * @return user option
+     */
     public int pickReservationPrompt() {
         return JOptionPane.showOptionDialog(null, cBoxReservations, "Choose a reservation: ",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,null,null,null);
     }
+
+    /**
+     * Gets combo box of reservation names
+     * @return cBoxReservations
+     */
     public JComboBox<String> getcBoxReservations() {
         return cBoxReservations;
     }
+
+    /**
+     * Updates combo box of hotel names
+     * @param hotels array list of hotel names
+     */
     public void updatecBoxHotels(ArrayList<String> hotels) {
         cBoxHotels.removeAllItems();
         for (String name : hotels) {
             cBoxHotels.addItem(name);
         }
     }
+
+    /**
+     * Gets check in date
+     * @return check in date
+     */
     public int getIn() {
         return (int)spnIn.getValue();
     }
+
+    /**
+     * Gets check out date
+     * @return check out date
+     */
     public int getOut() {
         return (int)spnOut.getValue();
     }
+
+    /**
+     * Gets date to be modified
+     * @return date to be modified
+     */
     public int getModifyDate() {
         return (int)cBoxDay.getSelectedItem();
     }
+
+    /**
+     * Prompt for date rete modification
+     * @return user option
+     */
     public int modifyDatePrompt() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, Y_AXIS));
@@ -874,27 +1054,65 @@ public class LandAnAGUI extends JFrame {
         return JOptionPane.showOptionDialog(null, panel, "Set date price rate: ",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 100);
     }
+
+    /**
+     * Gets rate value of sldRate
+     * @return value of sldRate
+     */
     public int getRate() {
         return sldRate.getValue();
     }
+
+    /**
+     * Gets sldRate
+     * @return sldRate
+     */
     public JSlider getSldRate() {
         return sldRate;
     }
+
+    /**
+     * Gets lblRate
+     * @return lblRate
+     */
     public JLabel getLblRate() {
         return lblRate;
     }
+
+    /**
+     * Gets text in discount code text field
+     * @return discount code in text field
+     */
     public String getTfDiscountText() {
         return tfDiscount.getText();
     }
+
+    /**
+     * Prompt for invalid discount code
+     */
     public void invalidDiscountPrompt() {
         JOptionPane.showMessageDialog(null, "Invalid discount code");
     }
+
+    /**
+     * Prompt for invalid date
+     */
     public void invalidDatePrompt() {
         JOptionPane.showMessageDialog(null, "Invalid dates");
     }
+
+    /**
+     * Prompt for no room available
+     */
     public void noRoomsAvailablePrompt() {
         JOptionPane.showMessageDialog(null, "No rooms available.");
     }
+
+    /**
+     *  Prompt for feature view date
+     * @param nAvail number of available rooms in a date
+     * @param nBooked number of booked rooms in a date
+     */
     public void checkDatePrompt(int nAvail, int nBooked) {
         JPanel dateInfoPanel = new JPanel();
         dateInfoPanel.setLayout(new GridLayout(2, 1, 0, 0)); // 2 rows, 1 column
@@ -907,9 +1125,21 @@ public class LandAnAGUI extends JFrame {
 
         JOptionPane.showMessageDialog(null, dateInfoPanel, "Date Information", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    /**
+     * Gets selected day
+     * @return selected day name
+     */
     public int getDay() {
         return (int)cBoxDay.getSelectedItem();
     }
+
+    /**
+     * Prompt for feature view room
+     * @param name name of room
+     * @param rate rate of room
+     * @param dates array list of dates available in room
+     */
     public void checkRoomPrompt(String name, double rate, ArrayList<Integer> dates) {
         JPanel roomInfoPanel = new JPanel();
         roomInfoPanel.setLayout(new GridLayout(3, 1, 0, 0)); // 3 rows, 1 column
@@ -930,7 +1160,13 @@ public class LandAnAGUI extends JFrame {
 
         JOptionPane.showMessageDialog(null, roomInfoPanel, "Room Information", JOptionPane.INFORMATION_MESSAGE);
     }
-    public void checkReservationPanel(Room room, Reservation reservation) {
+
+    /**
+     * Prompt for feature view reservation
+     * @param room room the reservation is in
+     * @param reservation reservation selected
+     */
+    public void checkReservationPrompt(Room room, Reservation reservation) {
         JPanel resInfoPanel = new JPanel();
         resInfoPanel.setLayout(new GridLayout(10, 1, 0, 0)); // 10 rows, 1 column
 

@@ -11,6 +11,11 @@ public class LandAnAController implements ActionListener, ChangeListener {
     final LandAnAGUI gui;
     final LandAnAManager manager;
 
+    /**
+     * Connects to GUI and Manager
+     * @param gui view component
+     * @param manager model component
+     */
     public LandAnAController(LandAnAGUI gui, LandAnAManager manager) {
         this.gui =  gui;
         this.manager = manager;
@@ -19,6 +24,10 @@ public class LandAnAController implements ActionListener, ChangeListener {
         gui.setChangeListener(this);
     }
 
+    /**
+     * Button logic
+     * @param e the event to be processed
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Create Hotel")) {
             gui.createHotelPanel(manager.getHotelNames());
@@ -276,12 +285,16 @@ public class LandAnAController implements ActionListener, ChangeListener {
         }
         else if(e.getActionCommand().equals("Check Reservation")) {
             if (gui.getcBoxReservations().getSelectedIndex() != -1) {
-                gui.checkReservationPanel(manager.getRoom((String)gui.getcBoxReservations().getSelectedItem()),
+                gui.checkReservationPrompt(manager.getRoom((String)gui.getcBoxReservations().getSelectedItem()),
                         manager.getReservation((String) gui.getcBoxReservations().getSelectedItem()));
             }
         }
     }
 
+    /**
+     * Detects changes in sliders
+     * @param e  a ChangeEvent object
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() == gui.getSldStandard()) {
