@@ -7,6 +7,9 @@ import javax.swing.event.DocumentListener;
 
 import static javax.swing.BoxLayout.Y_AXIS;
 
+/**
+ * Contains all Graphical User Interface components of LandAnA
+ */
 public class LandAnAGUI extends JFrame {
     ImageIcon logo = new ImageIcon("LandAnALogo1.png");
     final String mint = "#BFE7CC";

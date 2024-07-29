@@ -4,6 +4,9 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Acts as listener and bridge from GUI to Manager
+ */
 public class LandAnAController implements ActionListener, ChangeListener {
     final LandAnAGUI gui;
     final LandAnAManager manager;
