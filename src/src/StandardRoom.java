@@ -2,6 +2,12 @@
  * Child class of a room. Type standard
  */
 public class StandardRoom extends Room{
+
+    /**
+     * Standard room constructor that uses parent constructor
+     * @param name name of room
+     * @param basePrice base price of hotel
+     */
     public StandardRoom(String name, double basePrice) {
         super(name, basePrice);
     }
